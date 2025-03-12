@@ -1,0 +1,671 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>link Account - <%=user.fullname%></title>
+    <meta name="description" content="zoe1">
+    <meta name="keywords"
+        content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="__manifest.json">
+    <script src="../plugins/sweetalerts/promise-polyfill.js"></script>
+    <link href="../plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="background-color:#000000;">
+
+    <!-- loader 
+    <div id="loader">
+        <img src="assets/img/loading-icon.png" alt="icon" class="loading-icon">
+    </div>-->
+    <!-- * loader -->
+
+<!-- App Header -->
+    <div class="appHeader"  style="background-color:#191919;">
+        <div class="left">
+            <a href="/dashboard" class="headerButton goBack">
+                <ion-icon name="chevron-back-outline" style="color:#f2f2f2;"></ion-icon>
+            </a>
+        </div>
+        <div class="pageTitle" style="color:#f2f2f2;">
+           Link Account
+        </div>
+        <div class="right">
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+        
+        <div class="section mt-2">
+            <div class="card" style="background-color:#191919;">
+                <div class="card-body">
+                    <div class="p-1">
+                        <div class="text-center">
+                            <h2 class="text-primary">Link Your Social Media Account</h2>
+                        </div>
+                        <form method="get" action="/link_socialmedia_account" enctype="multipart/form-data">
+                            <div class="form-group basic animated">
+                                <div class="input-wrapper">
+                                    <select name="social" style="color:#cecece;" class="form-control custom-select">
+                                    <option value="" style="font-size:30px;"><b>---Select Social Media Account---</b></option>
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="Twitter">Twitter</option>
+                                    <option value="Tiktok">Tiktok</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group basic animated">
+                                <div class="input-wrapper">
+                                    <input type="text" style="color:#cecece;" class="form-control" name="username" placeholder="Input Username" id="name2">
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+                            <div class="form-group basic animated">
+                                <div class="input-wrapper">
+                                    <input type="email" style="color:#cecece;" class="form-control" name="email" placeholder="Input Email" id="name2">
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+                            <div class="form-group basic animated">
+                                <div class="input-wrapper">
+                                    <input type="text" style="color:#cecece;" class="form-control" name="password" placeholder="Input password" id="name2">
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="form-group basic animated">
+                                <div class="input-wrapper">
+                                    <input type="text" style="color:#cecece;" class="form-control" name="confirm_password" placeholder="Confirm Password" id="email2">
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <button type="submit" name="link_account" class="btn btn-primary btn-lg btn-block">Submit</button>
+                            </div>
+
+                        </form>
+                                           </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- * App Capsule -->
+
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="/dashboard" class="item">
+            <div class="col">
+                <ion-icon name="pie-chart-outline"></ion-icon>
+                <strong>Dashboard</strong>
+            </div>
+        </a>
+        <a href="/deposit" class="item">
+            <div class="col">
+                <ion-icon name="cash-outline"></ion-icon>
+                <strong>Deposit</strong>
+            </div>
+        </a>
+        <a href="depositHistory/<%=user._id%>" class="item">
+            <div class="col">
+                <ion-icon name="apps-outline"></ion-icon>
+                <strong>Transaction</strong>
+            </div>
+        </a>
+        <a href="/withdrawal" class="item">
+            <div class="col">
+                <ion-icon name="wallet-outline"></ion-icon>
+                <strong>Withdrawal</strong>
+            </div>
+        </a>
+        <a href="/profile" class="item">
+            <div class="col">
+                <ion-icon name="person-outline"></ion-icon>
+                <strong>Profile</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+    <!-- App Sidebar -->
+    <div class="modal fade panelbox panelbox-left" id="sidebarPanel" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <!-- profile box -->
+                    <div class="profileBox pt-2 pb-2">
+                        <div class="image-wrapper">
+                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="imaged  w36">
+                        </div>
+                        <div class="in">
+                            <strong>zoe chin</strong>
+                            <div class="text-muted"> Account Plan: <%=user.account%></div>
+                        </div>
+                        <a href="#" class="btn btn-link btn-icon sidebar-close" data-bs-dismiss="modal">
+                            <ion-icon name="close-outline"></ion-icon>
+                        </a>
+                    </div>
+                    <!-- * profile box -->
+                    <!-- balance -->
+                    <div class="sidebar-balance">
+                        <div class="listview-title">Balance</div>
+                        <div class="in">
+                            <h1 class="amount"><%=user.balance%></h1>
+                        </div>
+                    </div>
+                    <!-- * balance -->
+
+                    <!-- action group -->
+                    <div class="action-group">
+                        <a href="/deposit" class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="add-outline"></ion-icon>
+                                </div>
+                                Deposit
+                            </div>
+                        </a>
+                        <a href="/withdrawal" class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="wallet-outline"></ion-icon>
+                                </div>
+                                Withdraw
+                            </div>
+                        </a>
+                        <a href="/widthdrawHistory/<%=user._id%>" class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="card-outline"></ion-icon>
+                                </div>
+                                history
+                            </div>
+                        </a>
+                        <a href="/depositHistory/<%=user._id%>" class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="swap-vertical"></ion-icon>
+                                </div>
+                                Transaction
+                            </div>
+                        </a>
+                    </div>
+                    <!-- * action group -->
+
+                    <!-- menu -->
+                    <div class="listview-title mt-1">Menu</div>
+                    <ul class="listview flush transparent no-line image-listview">
+                                                <li>
+                            <a href="/verify" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="document-text-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Verify Your Account (KYC)
+                                </div>
+                            </a>
+                        </li>
+                                                <li>
+                            <a href="/dashboard" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="pie-chart-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Dashboard
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/deposit" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="cash-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Deposit
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/withdrawal" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="wallet-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Withdrawal
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/insurance" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="fitness-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Insurance Deposit
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/signal" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="flash-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Signal Activation
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/upgrade" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="trending-up-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Upgrade
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- * menu -->
+
+                    <!-- others -->
+                    <div class="listview-title mt-1">Others</div>
+                    <ul class="listview flush transparent no-line image-listview">
+                        <li>
+                            <a href="/withdrawal" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="repeat-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    widthdraw History
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/depositHistory" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="qr-code-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Transactions
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/referral-history" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="link-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Referral History
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/profile" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="person-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Profile
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/logout" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="log-out-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Log out
+                                </div>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                    <!-- * others -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * App Sidebar -->
+
+
+
+    <!-- iOS Add to Home Action Sheet -->
+    <div class="modal inset fade action-sheet ios-add-to-home" id="ios-add-to-home-screen" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add to Home Screen</h5>
+                    <a href="#" class="close-button" data-bs-dismiss="modal">
+                        <ion-icon name="close"></ion-icon>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="action-sheet-content text-center">
+                        <div class="mb-1"><img src="assets/img/icon/192x192.png" alt="image" class="imaged w64 mb-2">
+                        </div>
+                        <div>
+                            Install <strong>Finapp</strong> on your iPhone's home screen.
+                        </div>
+                        <div>
+                            Tap <ion-icon name="share-outline"></ion-icon> and Add to homescreen.
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-primary btn-block" data-bs-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * iOS Add to Home Action Sheet -->
+
+
+    <!-- Android Add to Home Action Sheet -->
+    <div class="modal inset fade action-sheet android-add-to-home" id="android-add-to-home-screen" tabindex="-1"
+        role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add to Home Screen</h5>
+                    <a href="#" class="close-button" data-bs-dismiss="modal">
+                        <ion-icon name="close"></ion-icon>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="action-sheet-content text-center">
+                        <div class="mb-1">
+                            <img src="assets/img/icon/192x192.png" alt="image" class="imaged w64 mb-2">
+                        </div>
+                        <div>
+                            Install <strong>Finapp</strong> on your Android's home screen.
+                        </div>
+                        <div>
+                            Tap <ion-icon name="ellipsis-vertical"></ion-icon> and Add to homescreen.
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-primary btn-block" data-bs-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * Android Add to Home Action Sheet -->
+
+
+
+    <div id="cookiesbox" class="offcanvas offcanvas-bottom cookies-box" tabindex="-1" data-bs-scroll="true"
+        data-bs-backdrop="false">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">We use cookies</h5>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non lacinia quam. Nulla facilisi.
+                <a href="#" class="text-secondary"><u>Learn more</u></a>
+            </div>
+            <div class="buttons">
+                <a href="#" class="btn btn-primary btn-block" data-bs-dismiss="offcanvas">I understand</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="../plugins/jquery-3.1.1.min.js"></script>
+    <script src="../plugins/sweetalerts/sweetalert2.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File 
+    <script src="assets/js/base.js"></script>-->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#withdrawalMethod").change(function() {
+                if ($(this).val() == "Bitcoin") {
+                    $("#field1").fadeIn();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $("#field12").fadeIn();
+                    $("#field13").hide();
+                    $("#field14").hide();
+                    $("#field15").hide();
+                    $('#wallet-number').attr("placeholder", "Bitcoin");
+                    //$('#amount-fees').val('2%')
+
+                } else if ($(this).val() == "Ethereum") {
+                    $("#field2").fadeIn();
+                    $("#field1").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $("#field12").hide();
+                    $("#field13").fadeIn();
+                    $("#field14").hide();
+                    $("#field15").hide();
+                    $('#wallet-number').attr("placeholder", "Ethereum");
+                    //$('#amount-fees').val('4%')
+                } else if ($(this).val() == "Litecoin") {
+                    $("#field3").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $("#field12").hide();
+                    $("#field13").hide();
+                    $("#field14").fadeIn();
+                    $("#field15").hide();
+                    $('#wallet-number').attr("placeholder", "Litecoin");
+                    //$('#amount-fees').val('4%')
+                } else if ($(this).val() == "BitcoinCash") {
+                    $("#field4").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $("#field12").hide();
+                    $("#field13").hide();
+                    $("#field14").hide();
+                    $("#field15").fadeIn();
+                    $('#wallet-number').attr("placeholder", "BitcoinCash");
+                    //$('#amount-fees').val('4%')
+                } else if ($(this).val() == "Skrill") {
+                    $("#field5").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $("#field12").hide();
+                    $("#field13").hide();
+                    $("#field14").hide();
+                    $("#field15").hide();
+                    $('#wallet-number').attr("placeholder", "Skrill");
+                    //$('#amount-fees').val('3%')
+                } else if ($(this).val() == "Paypal") {
+                    $("#field6").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $("#field12").hide();
+                    $("#field13").hide();
+                    $("#field14").hide();
+                    $("#field15").hide();
+                    $('#wallet-number').attr("placeholder", "Paypal");
+                    //$('#amount-fees').val('2%')
+                } else if ($(this).val() == "Bank Transfer") {
+                    $("#field7").fadeIn();
+                    $("#field8").fadeIn();
+                    $("#field9").fadeIn();
+                    $("#field10").fadeIn();
+                    $("#field11").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field12").hide();
+                    $("#field13").hide();
+                    $("#field14").hide();
+                    $("#field15").hide();
+                    $('#wallet-number').attr("placeholder", "Bank Transfer");
+                    //$('#amount-fees').val('5%')
+                } else {
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $("#field12").hide();
+                    $("#field13").hide();
+                    $("#field14").hide();
+                    $("#field15").hide();
+                }
+            });
+
+            $("#amount-gram").keyup(function() {
+                //var usd = this.val();
+                var usd = $("#amount-gram").val();
+                //var course = '2.0682345991368067';
+                var course = '0.00011';
+                $("#amount-usd").val(usd * course);
+            });
+
+
+            /*$('#withdrawal-form').on('submit', function(event) {
+
+                var totalGgram = $('#total-gram').data('balance'),
+                    amountGram = $("#amount-usd").val();
+                console.log(totalGgram + '===' + amountGram);
+
+                if (totalGgram <= amountGram) {
+                    event.preventDefault();
+                    //$('#notEnough .card-body h2').text('Not enough Gram')
+                    //$('#notEnough').modal('toggle');
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Not enough Gram",
+                        type: "error",
+                        confirmButtonClass: 'btn btn-primary',
+                        buttonsStyling: false,
+                    });
+
+                } else {*/
+                    //$('#notEnough .card-body h2').text('Not available')
+                    ///$('#notEnough').modal('toggle')
+                    /* Swal.fire({
+                        title: "Error!",
+                        text: "Not available",
+                        type: "error",
+                        confirmButtonClass: 'btn btn-primary',
+                        buttonsStyling: false,
+                        });  */
+                //}
+            //});
+        });
+    </script>
+    <script>
+        function noticePop( value, type ){
+            swal({
+                html: '<span style="font-size:18px!important;">'+ `${value}` +'</span>',
+                type: `${type}`,
+                timer: 4000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(function(){
+                window.location.href = 'link_socialmedia_account';
+            });
+        }
+    </script>
+    <script>
+        // BASE URL and API Inclusion
+        const BASE_URL = 'https://gigtokennetwork.com/';
+        const API = `${BASE_URL}api/users.php`;
+        const USERID = 142;
+    </script>
+    <script src="user_notifications.js"></script>
+   
+    <script>
+        // Add to Home with 2 seconds delay.
+        AddtoHome("2000", "once");
+    </script>
+
+</body>
+
+</html>

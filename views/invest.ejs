@@ -1,0 +1,1345 @@
+
+ 
+
+<!DOCTYPE html>
+<html lang="en" style="height: auto; min-height: 100%;">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="index_files/logo.png">
+
+		<title>Premium - Trade Genesis</title>
+		
+		<!-- Vendors Style-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="index_files/vendors_css.css">
+		<!--amcharts -->
+		<link href="index_files/export.css" rel="stylesheet" type="text/css"> 
+		
+		<!-- Style-->  
+		<link rel="stylesheet" href="index_files/style.css">
+		<link rel="stylesheet" href="index_files/skin_color.css">
+		<link rel="stylesheet" href="index_files/custom.css">
+		
+		<style type="text/css">
+			.apexcharts-canvas {
+				position: relative;
+				user-select: none;
+			}
+
+
+			/* scrollbar is not visible by default for legend, hence forcing the visibility */
+			.apexcharts-canvas ::-webkit-scrollbar {
+				-webkit-appearance: none;
+				width: 6px;
+			}
+
+			.apexcharts-canvas ::-webkit-scrollbar-thumb {
+				border-radius: 4px;
+				background-color: rgba(0, 0, 0, .5);
+				box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+				-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+			}
+
+			.apexcharts-canvas.apexcharts-theme-dark {
+				background: #424242;
+			}
+
+			.apexcharts-inner {
+				position: relative;
+			}
+
+			.apexcharts-text tspan {
+				font-family: inherit;
+			}
+
+			.legend-mouseover-inactive {
+				transition: 0.15s ease all;
+				opacity: 0.20;
+			}
+
+			.apexcharts-series-collapsed {
+				opacity: 0;
+			}
+
+			.apexcharts-tooltip {
+				border-radius: 5px;
+				box-shadow: 2px 2px 6px -4px #999;
+				cursor: default;
+				font-size: 14px;
+				left: 62px;
+				opacity: 0;
+				pointer-events: none;
+				position: absolute;
+				top: 20px;
+				overflow: hidden;
+				white-space: nowrap;
+				z-index: 12;
+				transition: 0.15s ease all;
+			}
+
+			.apexcharts-tooltip.apexcharts-active {
+				opacity: 1;
+				transition: 0.15s ease all;
+			}
+
+			.apexcharts-tooltip.apexcharts-theme-light {
+				border: 1px solid #e3e3e3;
+				background: rgba(255, 255, 255, 0.96);
+			}
+
+			.apexcharts-tooltip.apexcharts-theme-dark {
+				color: #fff;
+				background: rgba(30, 30, 30, 0.8);
+			}
+
+			.apexcharts-tooltip * {
+				font-family: inherit;
+			}
+
+
+			.apexcharts-tooltip-title {
+				padding: 6px;
+				font-size: 15px;
+				margin-bottom: 4px;
+			}
+
+			.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+			background: #ECEFF1;
+			border-bottom: 1px solid #ddd;
+			}
+
+			.apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+			background: rgba(0, 0, 0, 0.7);
+			border-bottom: 1px solid #333;
+			}
+
+			.apexcharts-tooltip-text-value,
+			.apexcharts-tooltip-text-z-value {
+			display: inline-block;
+			font-weight: 600;
+			margin-left: 5px;
+			}
+
+			.apexcharts-tooltip-text-z-label:empty,
+			.apexcharts-tooltip-text-z-value:empty {
+			display: none;
+			}
+
+			.apexcharts-tooltip-text-value,
+			.apexcharts-tooltip-text-z-value {
+			font-weight: 600;
+			}
+
+			.apexcharts-tooltip-marker {
+			width: 12px;
+			height: 12px;
+			position: relative;
+			top: 0px;
+			margin-right: 10px;
+			border-radius: 50%;
+			}
+
+			.apexcharts-tooltip-series-group {
+			padding: 0 10px;
+			display: none;
+			text-align: left;
+			justify-content: left;
+			align-items: center;
+			}
+
+			.apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+			opacity: 1;
+			}
+
+			.apexcharts-tooltip-series-group.apexcharts-active,
+			.apexcharts-tooltip-series-group:last-child {
+			padding-bottom: 4px;
+			}
+
+			.apexcharts-tooltip-series-group-hidden {
+			opacity: 0;
+			height: 0;
+			line-height: 0;
+			padding: 0 !important;
+			}
+
+			.apexcharts-tooltip-y-group {
+			padding: 6px 0 5px;
+			}
+
+			.apexcharts-tooltip-candlestick {
+			padding: 4px 8px;
+			}
+
+			.apexcharts-tooltip-candlestick>div {
+			margin: 4px 0;
+			}
+
+			.apexcharts-tooltip-candlestick span.value {
+			font-weight: bold;
+			}
+
+			.apexcharts-tooltip-rangebar {
+			padding: 5px 8px;
+			}
+
+			.apexcharts-tooltip-rangebar .category {
+			font-weight: 600;
+			color: #777;
+			}
+
+			.apexcharts-tooltip-rangebar .series-name {
+			font-weight: bold;
+			display: block;
+			margin-bottom: 5px;
+			}
+
+			.apexcharts-xaxistooltip {
+			opacity: 0;
+			padding: 9px 10px;
+			pointer-events: none;
+			color: #373d3f;
+			font-size: 13px;
+			text-align: center;
+			border-radius: 2px;
+			position: absolute;
+			z-index: 10;
+			background: #ECEFF1;
+			border: 1px solid #90A4AE;
+			transition: 0.15s ease all;
+			}
+
+			.apexcharts-xaxistooltip.apexcharts-theme-dark {
+			background: rgba(0, 0, 0, 0.7);
+			border: 1px solid rgba(0, 0, 0, 0.5);
+			color: #fff;
+			}
+
+			.apexcharts-xaxistooltip:after,
+			.apexcharts-xaxistooltip:before {
+			left: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+			}
+
+			.apexcharts-xaxistooltip:after {
+			border-color: rgba(236, 239, 241, 0);
+			border-width: 6px;
+			margin-left: -6px;
+			}
+
+			.apexcharts-xaxistooltip:before {
+			border-color: rgba(144, 164, 174, 0);
+			border-width: 7px;
+			margin-left: -7px;
+			}
+
+			.apexcharts-xaxistooltip-bottom:after,
+			.apexcharts-xaxistooltip-bottom:before {
+			bottom: 100%;
+			}
+
+			.apexcharts-xaxistooltip-top:after,
+			.apexcharts-xaxistooltip-top:before {
+			top: 100%;
+			}
+
+			.apexcharts-xaxistooltip-bottom:after {
+			border-bottom-color: #ECEFF1;
+			}
+
+			.apexcharts-xaxistooltip-bottom:before {
+			border-bottom-color: #90A4AE;
+			}
+
+			.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+			border-bottom-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+			border-bottom-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-xaxistooltip-top:after {
+			border-top-color: #ECEFF1
+			}
+
+			.apexcharts-xaxistooltip-top:before {
+			border-top-color: #90A4AE;
+			}
+
+			.apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+			border-top-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+			border-top-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-xaxistooltip.apexcharts-active {
+			opacity: 1;
+			transition: 0.15s ease all;
+			}
+
+			.apexcharts-yaxistooltip {
+			opacity: 0;
+			padding: 4px 10px;
+			pointer-events: none;
+			color: #373d3f;
+			font-size: 13px;
+			text-align: center;
+			border-radius: 2px;
+			position: absolute;
+			z-index: 10;
+			background: #ECEFF1;
+			border: 1px solid #90A4AE;
+			}
+
+			.apexcharts-yaxistooltip.apexcharts-theme-dark {
+			background: rgba(0, 0, 0, 0.7);
+			border: 1px solid rgba(0, 0, 0, 0.5);
+			color: #fff;
+			}
+
+			.apexcharts-yaxistooltip:after,
+			.apexcharts-yaxistooltip:before {
+			top: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+			}
+
+			.apexcharts-yaxistooltip:after {
+			border-color: rgba(236, 239, 241, 0);
+			border-width: 6px;
+			margin-top: -6px;
+			}
+
+			.apexcharts-yaxistooltip:before {
+			border-color: rgba(144, 164, 174, 0);
+			border-width: 7px;
+			margin-top: -7px;
+			}
+
+			.apexcharts-yaxistooltip-left:after,
+			.apexcharts-yaxistooltip-left:before {
+			left: 100%;
+			}
+
+			.apexcharts-yaxistooltip-right:after,
+			.apexcharts-yaxistooltip-right:before {
+			right: 100%;
+			}
+
+			.apexcharts-yaxistooltip-left:after {
+			border-left-color: #ECEFF1;
+			}
+
+			.apexcharts-yaxistooltip-left:before {
+			border-left-color: #90A4AE;
+			}
+
+			.apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+			border-left-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+			border-left-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-yaxistooltip-right:after {
+			border-right-color: #ECEFF1;
+			}
+
+			.apexcharts-yaxistooltip-right:before {
+			border-right-color: #90A4AE;
+			}
+
+			.apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+			border-right-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+			border-right-color: rgba(0, 0, 0, 0.5);
+			}
+
+			.apexcharts-yaxistooltip.apexcharts-active {
+			opacity: 1;
+			}
+
+			.apexcharts-yaxistooltip-hidden {
+			display: none;
+			}
+
+			.apexcharts-xcrosshairs,
+			.apexcharts-ycrosshairs {
+			pointer-events: none;
+			opacity: 0;
+			transition: 0.15s ease all;
+			}
+
+			.apexcharts-xcrosshairs.apexcharts-active,
+			.apexcharts-ycrosshairs.apexcharts-active {
+			opacity: 1;
+			transition: 0.15s ease all;
+			}
+
+			.apexcharts-ycrosshairs-hidden {
+			opacity: 0;
+			}
+
+			.apexcharts-selection-rect {
+			cursor: move;
+			}
+
+			.svg_select_boundingRect, .svg_select_points_rot {
+			pointer-events: none;
+			opacity: 0;
+			visibility: hidden;
+			}
+			.apexcharts-selection-rect + g .svg_select_boundingRect,
+			.apexcharts-selection-rect + g .svg_select_points_rot {
+			opacity: 0;
+			visibility: hidden;
+			}
+
+			.apexcharts-selection-rect + g .svg_select_points_l,
+			.apexcharts-selection-rect + g .svg_select_points_r {
+			cursor: ew-resize;
+			opacity: 1;
+			visibility: visible;
+			}
+
+			.svg_select_points {
+			fill: #efefef;
+			stroke: #333;
+			rx: 2;
+			}
+
+			.apexcharts-canvas.apexcharts-zoomable .hovering-zoom {
+			cursor: crosshair
+			}
+
+			.apexcharts-canvas.apexcharts-zoomable .hovering-pan {
+			cursor: move
+			}
+
+			.apexcharts-zoom-icon,
+			.apexcharts-zoomin-icon,
+			.apexcharts-zoomout-icon,
+			.apexcharts-reset-icon,
+			.apexcharts-pan-icon,
+			.apexcharts-selection-icon,
+			.apexcharts-menu-icon,
+			.apexcharts-toolbar-custom-icon {
+			cursor: pointer;
+			width: 20px;
+			height: 20px;
+			line-height: 24px;
+			color: #6E8192;
+			text-align: center;
+			}
+
+			.apexcharts-zoom-icon svg,
+			.apexcharts-zoomin-icon svg,
+			.apexcharts-zoomout-icon svg,
+			.apexcharts-reset-icon svg,
+			.apexcharts-menu-icon svg {
+			fill: #6E8192;
+			}
+
+			.apexcharts-selection-icon svg {
+			fill: #444;
+			transform: scale(0.76)
+			}
+
+			.apexcharts-theme-dark .apexcharts-zoom-icon svg,
+			.apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+			.apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+			.apexcharts-theme-dark .apexcharts-reset-icon svg,
+			.apexcharts-theme-dark .apexcharts-pan-icon svg,
+			.apexcharts-theme-dark .apexcharts-selection-icon svg,
+			.apexcharts-theme-dark .apexcharts-menu-icon svg,
+			.apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+			fill: #f3f4f5;
+			}
+
+			.apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+			.apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+			.apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+			fill: #008FFB;
+			}
+
+			.apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+			.apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+			.apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+			.apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+			.apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+			.apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+			fill: #333;
+			}
+
+			.apexcharts-selection-icon,
+			.apexcharts-menu-icon {
+			position: relative;
+			}
+
+			.apexcharts-reset-icon {
+			margin-left: 5px;
+			}
+
+			.apexcharts-zoom-icon,
+			.apexcharts-reset-icon,
+			.apexcharts-menu-icon {
+			transform: scale(0.85);
+			}
+
+			.apexcharts-zoomin-icon,
+			.apexcharts-zoomout-icon {
+			transform: scale(0.7)
+			}
+
+			.apexcharts-zoomout-icon {
+			margin-right: 3px;
+			}
+
+			.apexcharts-pan-icon {
+			transform: scale(0.62);
+			position: relative;
+			left: 1px;
+			top: 0px;
+			}
+
+			.apexcharts-pan-icon svg {
+			fill: #fff;
+			stroke: #6E8192;
+			stroke-width: 2;
+			}
+
+			.apexcharts-pan-icon.apexcharts-selected svg {
+			stroke: #008FFB;
+			}
+
+			.apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+			stroke: #333;
+			}
+
+			.apexcharts-toolbar {
+			position: absolute;
+			z-index: 11;
+			max-width: 176px;
+			text-align: right;
+			border-radius: 3px;
+			padding: 0px 6px 2px 6px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			}
+
+			.apexcharts-menu {
+			background: #fff;
+			position: absolute;
+			top: 100%;
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			padding: 3px;
+			right: 10px;
+			opacity: 0;
+			min-width: 110px;
+			transition: 0.15s ease all;
+			pointer-events: none;
+			}
+
+			.apexcharts-menu.apexcharts-menu-open {
+			opacity: 1;
+			pointer-events: all;
+			transition: 0.15s ease all;
+			}
+
+			.apexcharts-menu-item {
+			padding: 6px 7px;
+			font-size: 12px;
+			cursor: pointer;
+			}
+
+			.apexcharts-theme-light .apexcharts-menu-item:hover {
+			background: #eee;
+			}
+
+			.apexcharts-theme-dark .apexcharts-menu {
+			background: rgba(0, 0, 0, 0.7);
+			color: #fff;
+			}
+
+			@media screen and (min-width: 768px) {
+			.apexcharts-canvas:hover .apexcharts-toolbar {
+				opacity: 1;
+			}
+			}
+
+			.apexcharts-datalabel.apexcharts-element-hidden {
+			opacity: 0;
+			}
+
+			.apexcharts-pie-label,
+			.apexcharts-datalabels,
+			.apexcharts-datalabel,
+			.apexcharts-datalabel-label,
+			.apexcharts-datalabel-value {
+			cursor: default;
+			pointer-events: none;
+			}
+
+			.apexcharts-pie-label-delay {
+			opacity: 0;
+			animation-name: opaque;
+			animation-duration: 0.3s;
+			animation-fill-mode: forwards;
+			animation-timing-function: ease;
+			}
+
+			.apexcharts-canvas .apexcharts-element-hidden {
+			opacity: 0;
+			}
+
+			.apexcharts-hide .apexcharts-series-points {
+			opacity: 0;
+			}
+
+			.apexcharts-gridline,
+			.apexcharts-annotation-rect,
+			.apexcharts-tooltip .apexcharts-marker,
+			.apexcharts-area-series .apexcharts-area,
+			.apexcharts-line,
+			.apexcharts-zoom-rect,
+			.apexcharts-toolbar svg,
+			.apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+			.apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+			.apexcharts-radar-series path,
+			.apexcharts-radar-series polygon {
+			pointer-events: none;
+			}
+
+
+			/* markers */
+
+			.apexcharts-marker {
+			transition: 0.15s ease all;
+			}
+
+			@keyframes opaque {
+			0% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+			}
+			}
+
+
+			/* Resize generated styles */
+
+			@keyframes resizeanim {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 0;
+			}
+			}
+
+			.resize-triggers {
+			animation: 1ms resizeanim;
+			visibility: hidden;
+			opacity: 0;
+			}
+
+			.resize-triggers,
+			.resize-triggers>div,
+			.contract-trigger:before {
+			content: " ";
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+			}
+
+			.resize-triggers>div {
+			background: #eee;
+			overflow: auto;
+			}
+
+			.contract-trigger:before {
+			width: 200%;
+			height: 200%;
+			}
+		</style>
+
+		<style>
+			.cke{visibility:hidden;}
+		</style>
+
+		<style type="text/css">
+			.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}
+		</style>
+	</head>
+
+<body class="dark-skin theme-primary sidebar-mini fixed" style="height: auto; min-height: 100%;">
+	<div class="translator">
+		<div id="google_translate_element"></div>
+		<script type="text/javascript">
+			function googleTranslateElementInit() {
+			  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+			}
+		</script>
+			
+		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	</div>
+<div class="wrapper" style="height: auto; min-height: 100%;">
+	<br>
+	
+	<header class="main-header">
+		<div class="d-flex align-items-center logo-box justify-content-start">	
+			<!-- Logo -->
+			<br><br>
+			<a href="/dashboard" class="logo">
+			<!-- logo-->
+			
+			<div class="logo-lg">
+				<span class="light-logo"><img src="index_files/logo.png" alt="logo" height="40px" width="150px"></span>
+				<span class="dark-logo"><img src="index_files/logo.png" alt="logo" height="40px" width="150px"></span>
+			</div>
+			</a>	
+		</div>  
+		<!-- Header Navbar -->
+		<nav class="navbar navbar-static-top">
+		<!-- Sidebar toggle button-->
+		<div class="app-menu" style="padding-right:50px;">
+
+			<ul class="header-megamenu nav" style="display: flex; list-style-type:none; justify-content: space-between;">
+
+				<li class="btn-group nav-item">
+					<a href="#" class="waves-effect waves-light nav-link push-btn btn-primary-light" data-toggle="push-menu" role="button">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-left"><line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line></svg>
+					</a>
+				</li>
+
+				<li class="dropdown user user-menu topicon">
+					<a href="/account/<%=user._id%>" style="border-radius: 7px;" class=" push-btn waves-effect waves-light dropdown-toggle btn-primary-light" data-bs-toggle="dropdown" title="User Profile">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+							<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+							<circle cx="12" cy="7" r="4"></circle>
+						</svg>
+					</a>
+				</li>	
+
+				
+			</ul> 
+
+		</div>
+			
+		<div class="navbar-custom-menu r-side">
+			<ul class="nav navbar-nav">
+			
+			</ul>
+		</div>
+
+		</nav>
+	</header>
+  
+	<aside class="main-sidebar">
+        <!-- sidebar-->
+        <section class="sidebar position-relative">	
+            <div class="multinav">
+            <div class="multinav-scroll ps ps--active-y">	
+                <!-- sidebar menu-->
+                <ul class="sidebar-menu mt-sm-20 mt-40 tree" data-widget="tree" style="overflow-y: auto;">
+                        <style>
+                            .sidebar-menu a{
+                                text-decoration: none;
+                            }
+                            .active a{
+                                border-radius: 6px;
+                            }
+                        </style>
+    
+                        <li>
+                        <a href="/dashboard" class="active" style="color: #008FFB;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                            <span>Dashboard</span>
+                        </a>
+                        </li> 
+                        
+                        <li>
+                            <a href="/trades">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                <span>Trades</span>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="/depositHistory/<%=user._id%>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart">
+                                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                    <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                                </svg>
+                                <span>Deposit history</span>
+                            </a>
+                        </li>
+                                        
+                        <li>
+                            <a href="/account/<%=user._id%>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+    
+                     
+    
+                        <li>
+                            <a href="/refer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                                <span>Refer</span>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="/withdrawal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                                <span>Withdrawal</span>
+                            </a>
+                        </li>
+    
+                        <li>
+                          <a href="/widthdrawHistory/<%=user._id%>">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart">
+                                  <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                  <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                              </svg>
+                              <span>Widthdraw history</span>
+                          </a>
+                      </li>
+    
+                        <li>
+                            <a href="/premium">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><path d="M12.89 1.45l8 4A2 2 0 0 1 22 7.24v9.53a2 2 0 0 1-1.11 1.79l-8 4a2 2 0 0 1-1.79 0l-8-4a2 2 0 0 1-1.1-1.8V7.24a2 2 0 0 1 1.11-1.79l8-4a2 2 0 0 1 1.78 0z"></path><polyline points="2.32 6.16 12 11 21.68 6.16"></polyline><line x1="12" y1="22.76" x2="12" y2="11"></line><line x1="7" y1="3.5" x2="17" y2="8.5"></line></svg>
+                                <span>Investment Plans</span>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="/logout">
+                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-out"><path d="M12.89 1.45l8 4A2 2 0 0 1 22 7.24v9.53a2 2 0 0 1-1.11 1.79l-8 4a2 2 0 0 1-1.79 0l-8-4a2 2 0 0 1-1.1-1.8V7.24a2 2 0 0 1 1.11-1.79l8-4a2 2 0 0 1 1.78 0z"></path><polyline points="2.32 6.16 12 11 21.68 6.16"></polyline><line x1="12" y1="22.76" x2="12" y2="11"></line><line x1="7" y1="3.5" x2="17" y2="8.5"></line></svg> -->
+                                <span>Log Out</span>
+                            </a>
+                        </li>
+    
+                        <br>
+    
+                        <div class="sidebar-widgets">
+                            <div class="mx-25 mb-30 p-30 text-center bg-primary-light rounded5">
+                                <img src="index_files/trophy.png" alt="">
+                                <h4 class="my-3 fw-500 text-uppercase text-primary">Start Trading</h4>
+                                <span class="fs-12 d-block mb-3 text-black-50">Offering discounts for better online a store can loyalty weapon into driving</span>
+                                <button type="button" class="waves-effect waves-light btn btn-sm btn-primary mb-5"><a href="/premium" class="text-white">Invest Now</a></button>
+                            </div>
+                            
+                            <div class="copyright text-center m-25">
+                                <p><strong class="d-block">Trade Genesis</strong> © 2018 All Rights Reserved</p>
+                            </div>
+                        </div>
+                </ul>
+            <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 402px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 199px;"></div></div></div>
+            </div>
+        </section>
+    </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="min-height: 361px;">
+	  <div class="container-full">	
+      <div class="content pt-20 pb-0" style="min-height:100px">
+        <div class="box">
+          <div class="box-body">  
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+              {
+              "symbols": [
+              {
+                "proName": "FOREXCOM:SPXUSD",
+                "title": "S&P 500"
+              },
+              {
+                "proName": "FOREXCOM:NSXUSD",
+                "title": "US 100"
+              },
+              {
+                "proName": "FX_IDC:EURUSD",
+                "title": "EUR/USD"
+              },
+              {
+                "proName": "BITSTAMP:BTCUSD",
+                "title": "Bitcoin"
+              },
+              {
+                "proName": "BITSTAMP:ETHUSD",
+                "title": "Ethereum"
+              }
+              ],
+              "showSymbolLogo": false,
+              "colorTheme": "dark",
+              "isTransparent": true,
+              "displayMode": "adaptive",
+              "locale": "en"
+            }
+              </script>
+            </div>
+            <!-- TradingView Widget END -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+	<!-- Main content -->
+    <!-- Content Header (Page header) -->
+    <div class="row">  
+		<div class="content-header  pt-0">
+			<div class="d-flex align-items-center">
+				<div class="me-auto" style="display:flex; justify-content: center;">
+					<h4 class="page-title">Investment Plans</h4>
+					<div class="d-inline-block align-items-center">
+						<nav>
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item" aria-current="page"><a href="/premium">Trade Genesis</a></li>
+								<li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-upload" style="margin-left: 5px;"></i></a></li>
+							</ol>
+							<style>
+								.breadcrumb{
+								display: flex;
+								list-style-type: none;
+								margin-top: -2px;
+								}
+								.breadcrumb li{
+								padding: 2px;
+								}
+								.breadcrumb a{
+								text-decoration: none;
+								}
+							</style>
+						</nav>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+    </div>
+    <br>
+
+		<section class="content">
+	
+
+			<div class="row mt-30">
+				<div class="col-md-3 col-12 ">
+					<div class="price-table bg-gray-100">
+						<div class="price-top bg-white">
+							<div class="price-title">
+								<h3 class="mb-15">Starter plan </h3>
+							</div>
+							<div class="price-prize">
+								<p>Minimum deposit of </p>
+								<h2>500</h2>
+								<p>Maximum deposit of </p>
+								<h2>3,499</h2>
+							</div>
+						</div>
+						<div class="price-content">
+							<div class="price-table-list">
+								<ul class="list-unstyled">
+									<li><i class="fa fa-check"></i> 1.5% daily interest <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Full Automation <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Safe and secure <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+								</ul>
+							</div>
+							<br><br>
+							<div>
+								<form method="get" action="/premium">
+									<label for="">Amount to Invest: ($500 minimum)</label><br><br>
+									<input type="hidden" name="email" value="piuspolocha1231@gmail.com">
+									<input type="hidden" name="plan" value="starter plan">
+									<input type="text" name="invest" placeholder="enter amount within plan range" required><br>
+
+									<button name="join1"  onclick="alert('Please contact an admin to help  activate your account follow instructions')">Join Plan</button>
+									<style>
+										input{
+											background-color: #0c1a32;
+											color: white;
+											padding: 8px;
+											margin-bottom: 20px;
+											border-radius: 6px;
+											outline: none;
+										}
+										button{
+											padding:6px
+										}
+									</style>
+
+								</form>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-12">
+					<div class="price-table active bg-gray-100 pull-up">
+						<div class="price-top bg-white">
+							<div class="price-title">
+								<h3 class="mb-15"> Basic plan </h3>
+							</div>
+							<div class="price-prize">
+								<p>Minimum deposit of </p>
+								<h2>3,500</h2>
+								<p>Maximum deposit of </p>
+								<h2>8,499</h2>
+							</div>
+						</div>
+						<div class="price-content">
+							<div class="price-table-list">
+								<ul class="list-unstyled">
+									<li><i class="fa fa-check"></i> 1.5% daily interest  <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Full Automation <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Safe and secure <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+								</ul>
+							</div>
+						</div>
+						<br><br>
+						<div>
+							<form method="post">
+								<label for="">Amount to Invest: ($3,500 minimum)</label><br><br>
+								<input type="hidden" name="email" value="piuspolocha1231@gmail.com">
+								<input type="hidden" name="plan" value="basic plan">
+								<input type="text" name="invest" placeholder="enter amount within plan range" required><br>
+
+								<button name="join2" onclick="alert('Please contact an admin to help  activate your account follow instructions')">Join Plan</button>
+								<style>
+									input{
+										background-color: #0c1a32;
+										color: white;
+										padding: 8px;
+										margin-bottom: 20px;
+										border-radius: 6px;
+									}
+									button{
+										padding:6px
+									}
+								</style>
+
+							</form>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-12">
+					<div class="price-table bg-gray-100">
+						<div class="price-top bg-white">
+							<div class="price-title">
+								<h3 class="mb-15">Professional plan </h3>
+							</div>
+							<div class="price-prize">
+								<p>Minimum deposit of </p>
+								<h2>7,500</h2>
+								<p>Maximum deposit of </p>
+								<h2>9,999</h2>
+							</div>
+						</div>
+						<div class="price-content">
+							<div class="price-table-list">
+								<ul class="list-unstyled">
+									<li><i class="fa fa-check"></i> 1.5% daily interests  <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Full Automation <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Safe and secure <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+								</ul>
+							</div>
+						</div>
+						<br><br>
+						<div>
+							<form method="post">
+								<label for="">Amount to Invest: ($7,500 minimum)</label><br><br>
+								<input type="hidden" name="email" value="piuspolocha1231@gmail.com">
+								<input type="hidden" name="plan" value="professional plan">
+								<input type="text" name="invest" placeholder="enter amount within plan range" required><br>
+
+								<button name="join3" onclick="alert('Please contact an admin to help  activate your account follow instructions')">Join Plan</button>
+								<style>
+									input{
+										background-color: #0c1a32;
+										color: white;
+										padding: 8px;
+										margin-bottom: 20px;
+										border-radius: 6px;
+									}
+									button{
+										padding:6px
+									}
+								</style>
+
+							</form>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-12">
+					<div class="price-table bg-gray-100">
+						<div class="price-top bg-white">
+							<div class="price-title">
+								<h3 class="mb-15">VIP Plan </h3>
+							</div>
+							<div class="price-prize">
+								<p>Minimum deposit of </p>
+								<h2>10,000</h2>
+								<p>Maximum deposit of </p>
+								<h2>19,999</h2>
+							</div>
+						</div>
+						<div class="price-content">
+							<div class="price-table-list">
+								<ul class="list-unstyled">
+									<li><i class="fa fa-check"></i> 1.5% daily interests <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Full Automation <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Safe and secure <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+								</ul>
+							</div>
+						</div>
+						<br><br>
+							<div>
+								<form method="post">
+									<label for="">Amount to Invest: ($10,000 minimum)</label><br><br>
+									<input type="hidden" name="email" value="piuspolocha1231@gmail.com">
+									<input type="hidden" name="plan" value="VIP Plan">
+									<input type="text" name="invest" placeholder="enter amount within plan range" required><br>
+
+									<button name="join4" onclick="alert('Please contact an admin to help  activate your account follow instructions')">Join Plan</button>
+									<style>
+										input{
+											background-color: #0c1a32;
+											color: white;
+											padding: 8px;
+											margin-bottom: 20px;
+											border-radius: 6px;
+										}
+										button{
+											padding:6px
+										}
+									</style>
+
+								</form>
+								
+							</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-12">
+					<div class="price-table bg-gray-100">
+						<div class="price-top bg-white">
+							<div class="price-title">
+								<h3 class="mb-15">Elite plan</h3>
+							</div>
+							<div class="price-prize">
+								<p>Minimum deposit of </p>
+								<h2>20,000</h2>
+								<p>Maximum deposit of </p>
+								<h2>150,000</h2>
+							</div>
+						</div>
+						<div class="price-content">
+							<div class="price-table-list">
+								<ul class="list-unstyled">
+									<li><i class="fa fa-check"></i> 1.5% daily interests   <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Full Automation <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Safe and secure <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+								</ul>
+							</div>
+						</div>
+						<br><br>
+							<div>
+								<form method="post">
+									<label for="">Amount to Invest: ($20,000 minimum)</label><br><br>
+									<input type="hidden" name="email" value="piuspolocha1231@gmail.com">
+									<input type="hidden" name="plan" value="elite plan">
+									<input type="text" name="invest" placeholder="enter amount within plan range" required><br>
+
+									<button name="join5" onclick="alert('Please contact an admin to help  activate your account follow instructions')">Join Plan</button>
+									<style>
+										input{
+											background-color: #0c1a32;
+											color: white;
+											padding: 8px;
+											margin-bottom: 20px;
+											border-radius: 6px;
+										}
+										button{
+											padding:6px
+										}
+									</style>
+
+								</form>
+								
+							</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-12">
+					<div class="price-table bg-gray-100">
+						<div class="price-top bg-white">
+							<div class="price-title">
+								<h3 class="mb-15">Retirement Savings plan</h3>
+							</div>
+							<div class="price-prize">
+								<p>Minimum deposit of </p>
+								<h2>5,000.99</h2>
+								<p>Maximum deposit of </p>
+								<h2>1,000,000</h2>
+							</div>
+						</div>
+						<div class="price-content">
+							<div class="price-table-list">
+								<ul class="list-unstyled">
+									<li><i class="fa fa-check"></i> 50% daily interest <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Full Automation <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+									<li> <i class="fa fa-check"></i> Safe and secure <span class="tooltip-content float-end" data-placement="top" data-bs-toggle="tooltip" data-original-title="Lorem ipsum dolor sit amet"><i class="fa fa-info"></i></span> </li>
+								</ul>
+							</div>
+						</div>
+						<br><br>
+							<div>
+								<form method="post">
+									<label for="">Amount to Invest: ($5,000.99 minimum)</label><br><br>
+									<input type="hidden" name="email" value="piuspolocha1231@gmail.com">
+									<input type="hidden" name="plan" value="retirement savings plan">
+									<input type="text" name="invest" placeholder="enter amount within plan range" required><br>
+
+									<button name="join6" onclick="alert('Please contact an admin to help  activate your account follow instructions')">Join Plan</button>
+									<style>
+										input{
+											background-color: #0c1a32;
+											color: white;
+											padding: 8px;
+											margin-bottom: 20px;
+											border-radius: 6px;
+										}
+										button{
+											padding:6px
+										}
+									</style>
+
+								</form>
+								
+							</div>
+					</div>
+				</div>
+
+				<style>
+					.col-md-3{
+						border: 1px solid grey;
+						padding: 20px;
+						border-radius: 6px;
+						margin-bottom: 10px;
+						text-align: center;
+					}
+				</style>
+			</div>
+
+		</section>
+		<!-- /.content -->	  
+	  
+	  </div>
+  </div>
+</div>
+</section></div>
+  <!-- /.content-wrapper -->
+ 
+   <footer class="main-footer" align="center">
+	  © 2018 <a href="/dashboard">Trade Genesis</a>. All Rights Reserved.
+  </footer>
+		
+	<!-- Vendor JS -->
+<script src="js/jquery.js"></script>
+<script src="profile_files/chat-popup.js.download.js"></script>
+<script src="profile_files/feather.min.js.download.js"></script>	
+
+<script src="profile_files/apexcharts.js.download.js"></script>
+<script src="profile_files/jquery.webticker.min.js.download.js"></script>	
+<script src="profile_files/datatables.min.js.download.js"></script>
+<script src="profile_files/jquery.peity.js.download.js"></script>
+<!-- Crypto Admin App -->
+<script src="profile_files/template.js.download.js"></script>
+<script src="profile_files/dashboard5.js.download.js"></script>
+<script src="profile_files/data-table.js.download.js"></script>
+<script src="profile_files/app-ticket.js.download.js"></script>
+
+<script src="profile_files/flipclock.min.js.download.js"></script>
+<!--<script src="js/pages/countdown.js"></script>-->
+
+    <!-- ===== Style Switcher JS ===== -->
+    <script src="./premium_files/jQuery.style.switcher.js.download"></script>
+	<script type="text/javascript">
+		function copyText() {
+		  var copyText = document.getElementById("myInput");
+			//copyText.select();
+			//copyText.setSelectionRange(0, 99999);
+			navigator.clipboard
+			  .writeText(copyText.value)
+			  .then(() => {
+				alert("Referral code copied");
+			  })
+			  .catch(() => {
+				alert("something went wrong");
+			  });
+
+		}
+	</script>
+<script src="premium_files/svptx9cuv7kefzikxgtrul0akialyvvs.js.download" async=""></script>
+
+
+<script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+	<!-- <script src="//code.jivosite.com/widget/KeBCABelKp" async></script> -->
+
+<script>
+$(function () {
+
+  'use strict';
+    var date = new Date("02/12/2018 00:00:00"); // some mock date
+    var milliseconds = date.getTime()/1000;
+    var current = Date.now()/1000;
+	var clock = $('.clock').FlipClock(milliseconds-current, {
+		clockFace: 'DailyCounter',
+		countdown: true
+	}); 
+
+});

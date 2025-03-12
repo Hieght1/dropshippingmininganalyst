@@ -1,0 +1,100 @@
+[data-cellid="supertop_c1"][data-page=".global_login"][data-cellid="supertop_c1"][data-page=".global_login"][data-cellid="supertop_c1"][data-page=".global_login"] {
+  white-space: nowrap;
+}
+[data-cellid="footer_c1"][data-page=".global_login"][data-cellid="footer_c1"][data-page=".global_login"][data-cellid="footer_c1"][data-page=".global_login"] {
+  width: 33.33333333%;
+}
+[data-cellid="footer_c2"][data-page=".global_login"][data-cellid="footer_c2"][data-page=".global_login"][data-cellid="footer_c2"][data-page=".global_login"] {
+  width: 66.66666667%;
+}
+[data-cellid="superbottom_c1"][data-page=".global_login"][data-cellid="superbottom_c1"][data-page=".global_login"][data-cellid="superbottom_c1"][data-page=".global_login"] {
+  background-color: transparent;
+  width: 570px;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  white-space: nowrap;
+  padding: 12px;
+}
+[data-page=".global_login"][data-itemid="username_label"] {
+  font-weight: bold;
+  font-size: 15px;
+}
+[data-page=".global_login"][data-itemid="username"] {
+  font-weight: bold;
+}
+[data-page=".global_login"][data-itemid="password_label"] {
+  font-weight: bold;
+  font-size: 15px;
+}
+[data-page=".global_login"][data-itemid="password"] {
+  font-weight: bold;
+}
+[data-page=".global_login"][data-itemid="login_button"] > .btn {
+  font-weight: bold;
+  font-size: 17px;
+}
+[data-page=".global_login"][data-itemid="login_button"] {
+  padding: 10px;
+}
+[data-page=".global_login"][data-itemid="login_header"] {
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px;
+}
+[data-page=".global_login"][data-itemid="remember_password"] {
+  font-weight: bold;
+  font-size: 15px;
+}
+[data-page=".global_login"][data-itemid="continue_login_button"] > .btn {
+  font-weight: bold;
+  font-size: 17px;
+}
+[data-page=".global_login"][data-itemid="continue_login_button"] {
+  padding: 10px;
+}
+[data-page=".global_login"][data-itemid="loginform_register_link"] > .btn {
+  font-weight: bold;
+  font-size: 17px;
+}
+[data-page=".global_login"][data-itemid="loginform_register_link"] {
+  padding: 10px;
+}
+[data-page=".global_login"][data-itemid="login_remind"] > .btn {
+  font-weight: bold;
+  font-size: 17px;
+}
+[data-page=".global_login"][data-itemid="login_remind"] {
+  padding: 10px;
+}
+[data-page=".global_login"][data-itemid="custom_button"] > .btn {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+
+body.function-login {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-list {
+height:100%;
+background:transparent url("../../images/poll_background.png") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-register {
+height:100%;
+background:transparent url("../../images/poll_background.png") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-add {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-view {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}

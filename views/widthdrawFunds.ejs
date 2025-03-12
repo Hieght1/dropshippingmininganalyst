@@ -1,0 +1,727 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Withdrawal - <%=user.fullname%></title>
+    <meta name="description" content="zoe1">
+    <meta name="keywords"
+        content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="__manifest.json">
+    <script src="plugins/sweetalerts/promise-polyfill.js"></script>
+    <link href="plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
+    <script>
+        function noticePop( value, type ){
+            swal({
+                html: '<span style="font-size:18px!important;">'+ `${value}` +'</span>',
+                type: `${type}`,
+                timer: 4000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(function(){
+                window.location.href = 'withdraw';
+            });
+        }
+
+        function noticeUpgrade( value ){
+            swal({
+                html: '<span style="font-size:18px!important;">'+ `${value}` +'</span>',
+                type: "error",
+                confirmButtonColor: "red",
+                confirmButtonText: 'Okay.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                padding: '2em'
+            })/*.then(function(){
+                window.location.href = 'withdraw';
+            })*/;
+        }
+
+        function noticeGrade( value ){
+            swal({
+                html: '<span style="font-size:18px!important;">'+ `${value}` +'</span>',
+                type: "error",
+                confirmButtonColor: "red",
+                confirmButtonText: 'Okay.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                padding: '2em'
+            })/*.then(function(){
+                window.location.href = 'withdraw';
+            })*/;
+        }
+    </script>
+</head>
+
+<body  style="background-color:#000000;">
+
+    <!-- loader 
+    <div id="loader">
+        <img src="assets/img/loading-icon.png" alt="icon" class="loading-icon">
+    </div>-->
+    <!-- * loader -->
+
+    <!-- App Header -->
+    <div class="appHeader bg-primary text-light">
+        <div class="left">
+            <a href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#sidebarPanel">
+                <ion-icon name="menu-outline"></ion-icon>
+            </a>
+        </div>
+        <div class="pageTitle">
+            <p><%=user.fullname%></p>
+        </div>
+        <div class="right">
+            <a href="/profile" class="headerButton">
+                <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="imaged w32">
+            </a>
+        </div>
+    </div>
+    <!-- * App Header -->
+
+<div>
+    <!-- App Capsule -->
+    <div id="appCapsule">
+            <div class="section mt-2 mb-2"  id="content-page">
+            <div class="section-title" style="color:#f2f2f2;">Withdraw Funds</div>
+            <div class="card" style="background-color:#191919;">
+                <div class="card-body">
+                    <form action="/widthdraw/<%=user._id%>" method="post" autocomplete="off" id="withdrawal-form" class="was-validated">
+                        
+                        <p style="font-size:18px;" style="color:#cecece;"><b>NOTE:</b> </p>
+                        
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="select4b" style="color:#cecece;">Select Payment option</label>
+                                <select class="form-control custom-select" name="type" id="type"  required>
+                                   <option value="" style="font-size:30px;"><b>---Select Method---</b></option>
+                                                <option value="Bitcoin">Bitcoin</option>
+                                                <option value="Ethereum">Ethereum</option>
+                                                <option value="Litecoin">Litecoin</option>
+                                                <option value="BitcoinCash">BitcoinCash</option>
+                                                <option value="Skrill">Skrill</option>
+                                                <option value="Bank Transfer">Bank Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="field1" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">BTC Wallet Address</label>
+                                <input type="text" class="form-control" id="text4b" name="bitcoin_address" placeholder="BTC Wallet Address">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field2" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Ethereum Wallet Address</label>
+                                <input type="text" class="form-control" id="text4b" name="ethereum_address" placeholder="Ethereum Wallet Address">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field3" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">LiteCoin Wallet Address</label>
+                                <input type="text" class="form-control" id="text4b" name="litecoin_address" placeholder="LiteCoin Wallet Address">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field4" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">BitcoinCash Wallet Address</label>
+                                <input type="text" class="form-control" id="text4b" name="bitcoincash_address" placeholder="BitcoinCash Wallet Address">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field5" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Skrill Email</label>
+                                <input type="text" class="form-control" id="text4b" name="skrill_email" placeholder="Skrill Email">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field6" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">PayPal Email</label>
+                                <input type="text" class="form-control" id="text4b" name="paypal_email" placeholder="PayPal Email">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field7" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Bank Name</label>
+                                <input type="text" class="form-control" id="text4b" name="bank_name" placeholder="Bank Name">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field8" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Account Number</label>
+                                <input type="text" class="form-control" id="text4b" name="account_number" placeholder="Account Number">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field9" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Country</label>
+                                <input type="text" class="form-control" id="text4b" name="country" placeholder="Country">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div id="field10" style="display: None;" class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Swift Code</label>
+                                <input type="text" class="form-control" id="text4b" name="swift_code" placeholder="Swift Code">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Amount ($)</label>
+                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Amount without ($)" required>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Fees</label>
+                                <input class="form-control" name="fees" type="text" value="0%" readonly><br>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="textarea4b" style="color:#cecece;">Description</label>
+                                <textarea id="textarea4b" rows="2" class="form-control"
+                                    placeholder="Transaction Narration" name="narration" required></textarea>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="customCheckd1" required>
+                            <label class="form-check-label" for="customCheckd1" style="color:#cecece;"> Agree to Terms & Conditions?</label>
+                        </div>
+                        <br>
+                          <button name="withdraw" type="submit" class="btn btn-outline-primary shadowed me-1 mb-1">Confirm Withdrawal</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <!-- app footer -->
+        <div class="appFooter">
+            <div class="footer-title">
+                Copyright © Trade Genesis 2022. All Rights Reserved.
+            </div>
+        </div>
+        <!-- * app footer -->
+
+    </div>
+    <!-- * App Capsule -->
+</div>
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="/dashboard" class="item">
+            <div class="col">
+                <ion-icon name="pie-chart-outline"></ion-icon>
+                <strong>Dashboard</strong>
+            </div>
+        </a>
+        <a href="/deposit" class="item">
+            <div class="col">
+                <ion-icon name="cash-outline"></ion-icon>
+                <strong>Deposit</strong>
+            </div>
+        </a>
+        <a href="/depositHistory/<%=user._id%>" class="item">
+            <div class="col">
+                <ion-icon name="apps-outline"></ion-icon>
+                <strong>Transaction</strong>
+            </div>
+        </a>
+        <a href="/withdrawal" class="item active">
+            <div class="col">
+                <ion-icon name="wallet-outline"></ion-icon>
+                <strong>Withdrawal</strong>
+            </div>
+        </a>
+        <a href="/profile" class="item">
+            <div class="col">
+                <ion-icon name="person-outline"></ion-icon>
+                <strong>Profile</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+    <!-- App Sidebar -->
+    <div class="modal fade panelbox panelbox-left" id="sidebarPanel" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color:#191919; color:#f2f2f2;">
+                <div class="modal-body p-0" style="background-color:#191919; color:#f2f2f2;">
+                    <!-- profile box -->
+                    <div class="profileBox pt-2 pb-2" style="background-color:#191919;">
+                        <div class="image-wrapper">
+                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="imaged  w36">
+                        </div>
+                        <div class="in">
+                            <strong style="color:#f2f2f2;"><%=user.fullname%></strong>
+                            <div class="text-muted" style="color:#cecece;"> Account Plan: <%=user.account%></div>
+                        </div>
+                        <a href="#" class="btn btn-link btn-icon sidebar-close" data-bs-dismiss="modal">
+                            <ion-icon name="close-outline"></ion-icon>
+                        </a>
+                    </div>
+                    <!-- * profile box -->
+                    <!-- balance -->
+                    <div class="sidebar-balance">
+                        <div class="listview-title">Balance</div>
+                        <div class="in">
+                            <h1 class="amount"><%=user.balance%></h1>
+                        </div>
+                    </div>
+                    <!-- * balance -->
+
+                    <!-- action group -->
+                    <div class="action-group">
+                        <a href="/deposit" class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="add-outline"></ion-icon>
+                                </div>
+                                Deposit
+                            </div>
+                        </a>
+                        <a href="/withdrawal" class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="wallet-outline"></ion-icon>
+                                </div>
+                                Withdraw
+                            </div>
+                        </a>
+                        <a href="/widthdrawHistory/<%=user._id%>" class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="card-outline"></ion-icon>
+                                </div>
+                                 History
+                            </div>
+                        </a>
+                        <a href=" /depositHistory/<%=user._id%> " class="action-button">
+                            <div class="in">
+                                <div class="iconbox">
+                                    <ion-icon name="swap-vertical"></ion-icon>
+                                </div>
+                                Transaction
+                            </div>
+                        </a>
+                    </div>
+                    <!-- * action group -->
+
+                    <!-- menu -->
+                    <div class="listview-title mt-1" style="background-color:#191919; color:#f2f2f2;">Menu</div>
+                    <ul class="listview flush transparent no-line image-listview"  style="background-color:#191919;">
+                                                <li>
+                            <a href="/verify" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="document-text-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Verify Your Account (KYC)
+                                </div>
+                            </a>
+                        </li>
+                                                <li>
+                            <a href="/link_socialmedia_account" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="link-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Link Social Media Account
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="pie-chart-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Dashboard
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/deposit" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="cash-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Deposit
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/withdrawal" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="wallet-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Withdrawal
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/insurance" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="fitness-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Insurance Deposit
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/signal" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="flash-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Signal Activation
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/upgrade" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="trending-up-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Upgrade
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- * menu -->
+
+                    <!-- others -->
+                    <div class="listview-title mt-1" style="background-color:#191919; color:#f2f2f2;">Others</div>
+                    <ul class="listview flush transparent no-line image-listview" style="background-color:#191919;">
+                        <li>
+                            <a href="/widthdrawHistory/<%=user._id%>" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="repeat-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    widthdraw History
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/depositHistory/<%=user._id%>" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="qr-code-outline style="color:#cecece;""></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Transactions
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/referral-history" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="link-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Referral History
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/profile" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="person-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Profile
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/logout" class="item">
+                                <div class="icon-box bg-primary">
+                                    <ion-icon name="log-out-outline" style="color:#cecece;"></ion-icon>
+                                </div>
+                                <div class="in" style="color:#cecece;">
+                                    Log out
+                                </div>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                    <!-- * others -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * App Sidebar -->
+
+
+    <!-- iOS Add to Home Action Sheet -->
+    <div class="modal inset fade action-sheet ios-add-to-home" id="ios-add-to-home-screen" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add to Home Screen</h5>
+                    <a href="#" class="close-button" data-bs-dismiss="modal">
+                        <ion-icon name="close"></ion-icon>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="action-sheet-content text-center">
+                        <div class="mb-1"><img src="assets/img/icon/192x192.png" alt="image" class="imaged w64 mb-2">
+                        </div>
+                        <div>
+                            Install <strong>Finapp</strong> on your iPhone's home screen.
+                        </div>
+                        <div>
+                            Tap <ion-icon name="share-outline"></ion-icon> and Add to homescreen.
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-primary btn-block" data-bs-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * iOS Add to Home Action Sheet -->
+
+
+    <!-- Android Add to Home Action Sheet -->
+    <div class="modal inset fade action-sheet android-add-to-home" id="android-add-to-home-screen" tabindex="-1"
+        role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add to Home Screen</h5>
+                    <a href="#" class="close-button" data-bs-dismiss="modal">
+                        <ion-icon name="close"></ion-icon>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="action-sheet-content text-center">
+                        <div class="mb-1">
+                            <img src="assets/img/icon/192x192.png" alt="image" class="imaged w64 mb-2">
+                        </div>
+                        <div>
+                            Install <strong>Finapp</strong> on your Android's home screen.
+                        </div>
+                        <div>
+                            Tap <ion-icon name="ellipsis-vertical"></ion-icon> and Add to homescreen.
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-primary btn-block" data-bs-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * Android Add to Home Action Sheet -->
+
+
+
+    <div id="cookiesbox" class="offcanvas offcanvas-bottom cookies-box" tabindex="-1" data-bs-scroll="true"
+        data-bs-backdrop="false">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">We use cookies</h5>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non lacinia quam. Nulla facilisi.
+                <a href="#" class="text-secondary"><u>Learn more</u></a>
+            </div>
+            <div class="buttons">
+                <a href="#" class="btn btn-primary btn-block" data-bs-dismiss="offcanvas">I understand</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="plugins/jquery-3.1.1.min.js"></script>
+    <script src="plugins/sweetalerts/sweetalert2.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File 
+    <script src="assets/js/base.js"></script>-->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#type").change(function() {
+                if ($(this).val() == "Bitcoin") {
+                    $("#field1").fadeIn();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $('#wallet-number').attr("placeholder", "Bitcoin");
+                    $('#amount-fees').val('2%')
+
+                } else if ($(this).val() == "Ethereum") {
+                    $("#field2").fadeIn();
+                    $("#field1").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $('#wallet-number').attr("placeholder", "Ethereum");
+                    $('#amount-fees').val('4%')
+                } else if ($(this).val() == "Litecoin") {
+                    $("#field3").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $('#wallet-number').attr("placeholder", "Litecoin");
+                    $('#amount-fees').val('4%')
+                } else if ($(this).val() == "BitcoinCash") {
+                    $("#field4").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $('#wallet-number').attr("placeholder", "BitcoinCash");
+                    $('#amount-fees').val('4%')
+                } else if ($(this).val() == "Skrill") {
+                    $("#field5").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $('#wallet-number').attr("placeholder", "Skrill");
+                    $('#amount-fees').val('3%')
+                } else if ($(this).val() == "Paypal") {
+                    $("#field6").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                    $('#wallet-number').attr("placeholder", "Paypal");
+                    $('#amount-fees').val('2%')
+                } else if ($(this).val() == "Bank Transfer") {
+                    $("#field7").fadeIn();
+                    $("#field8").fadeIn();
+                    $("#field9").fadeIn();
+                    $("#field10").fadeIn();
+                    $("#field11").fadeIn();
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $('#wallet-number').attr("placeholder", "Bank Transfer");
+                    $('#amount-fees').val('5%')
+                } else {
+                    $("#field1").hide();
+                    $("#field2").hide();
+                    $("#field3").hide();
+                    $("#field4").hide();
+                    $("#field5").hide();
+                    $("#field6").hide();
+                    $("#field7").hide();
+                    $("#field8").hide();
+                    $("#field9").hide();
+                    $("#field10").hide();
+                    $("#field11").hide();
+                }
+            });
+        });
+    </script>
+   
+
+</body>
+
+</html>

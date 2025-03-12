@@ -1,0 +1,55 @@
+[data-cellid="top_c1"][data-page=".global_register"][data-cellid="top_c1"][data-page=".global_register"][data-cellid="top_c1"][data-page=".global_register"] {
+  background-color: #00adf2;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  white-space: nowrap;
+}
+[data-cellid="grid_c3"][data-page=".global_register"][data-cellid="grid_c3"][data-page=".global_register"][data-cellid="grid_c3"][data-page=".global_register"] {
+  background-color: transparent;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px;
+}
+[data-page=".global_register"][data-itemid="register_header"] {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 18px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding: 10px;
+}
+[data-page=".global_register"][data-itemid="custom_button"] > .btn {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+
+body.function-login {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-list {
+height:100%;
+background:transparent url("../../images/poll_background.png") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-register {
+height:100%;
+background:transparent url("../../images/poll_background.png") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-add {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-view {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}

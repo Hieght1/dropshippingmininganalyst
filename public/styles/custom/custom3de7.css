@@ -1,0 +1,25 @@
+body.function-login {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-list {
+height:100%;
+background:transparent url("../../images/poll_background.png") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-register {
+height:100%;
+background:transparent url("../../images/poll_background.png") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-add {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}
+body.function-view {
+height:100%;
+background:transparent url("../../images/singin-bg.jpg") no-repeat center center fixed;
+background-size:cover;
+}

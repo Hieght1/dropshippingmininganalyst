@@ -1,0 +1,203 @@
+// // I'll provide an example of a user suspension function in Node.js. This assumes you have a backend setup with a database (I'll use MongoDB as an example) and proper authentication. Here's a sample implementation:
+// javascript
+// // userController.js
+// const User = require('../models/User'); // Assuming you have a User model
+// const { validationResult } = require('express-validator');
+
+// // Suspend user function
+// const suspendUser = async (req, res) => {
+//     try {
+//         // Check for validation errors if you're using express-validator
+//         const errors = validationResult(req);
+//         if (!errors.isEmpty()) {
+//             return res.status(400).json({ errors: errors.array() });
+//         }
+
+//         // Get user ID from request parameters
+//         const { userId } = req.params;
+        
+//         // Check if the requesting user has admin privileges
+//         if (!req.user || !req.user.isAdmin) {
+//             return res.status(403).json({
+//                 success: false,
+//                 message: 'Unauthorized: Admin access required'
+//             });
+//         }
+
+//         // Find the user to suspend
+//         const user = await User.findById(userId);
+//         if (!user) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'User not found'
+//             });
+//         }
+
+//         // Check if user is already suspended
+//         if (user.isSuspended) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'User is already suspended'
+//             });
+//         }
+
+//         // Update user status to suspended
+//         user.isSuspended = true;
+//         user.suspensionDate = new Date();
+//         user.suspensionReason = req.body.reason || 'No reason provided';
+        
+//         // Optionally set suspension duration
+//         if (req.body.duration) {
+//             user.suspensionEndDate = new Date(Date.now() + req.body.duration * 24 * 60 * 60 * 1000);
+//         }
+
+//         // Save the updated user
+//         await user.save();
+
+//         return res.status(200).json({
+//             success: true,
+//             message: 'User suspended successfully',
+//             data: {
+//                 userId: user._id,
+//                 username: user.username,
+//                 isSuspended: user.isSuspended,
+//                 suspensionDate: user.suspensionDate,
+//                 suspensionEndDate: user.suspensionEndDate,
+//                 suspensionReason: user.suspensionReason
+//             }
+//         });
+
+//     } catch (error) {
+//         console.error('Error suspending user:', error);
+//         return res.status(500).json({
+//             success: false,
+//             message: 'Internal server error',
+//             error: error.message
+//         });
+//     }
+// };
+
+// // User model (example) - models/User.js
+// const mongoose = require('mongoose');
+
+// const userSchema = new mongoose.Schema({
+//     username: { type: String, required: true },
+//     email: { type: String, required: true, unique: true },
+//     isAdmin: { type: Boolean, default: false },
+//     isSuspended: { type: Boolean, default: false },
+//     suspensionDate: { type: Date },
+//     suspensionEndDate: { type: Date },
+//     suspensionReason: { type: String }
+// });
+
+// module.exports = mongoose.model('User', userSchema);
+
+// // Routes (example) - routes/userRoutes.js
+// const express = require('express');
+// const router = express.Router();
+// const { suspendUser } = require('../controllers/userController');
+// const { check } = require('express-validator');
+// const authMiddleware = require('../middleware/auth'); // Your authentication middleware
+
+// router.put('/suspend/:userId', [
+//     authMiddleware,
+//     check('reason', 'Suspension reason must be at least 5 characters')
+//         .optional()
+//         .isLength({ min: 5 }),
+//     check('duration', 'Duration must be a number')
+//         .optional()
+//         .isNumeric()
+// ], suspendUser);
+
+// module.exports = router;
+
+// // Middleware to check suspension status (example) - middleware/checkSuspension.js
+// const checkSuspension = async (req, res, next) => {
+//     if (req.user && req.user.isSuspended) {
+//         const currentDate = new Date();
+//         if (!req.user.suspensionEndDate || currentDate < req.user.suspensionEndDate) {
+//             return res.status(403).json({
+//                 success: false,
+//                 message: 'Account is suspended',
+//                 details: {
+//                     reason: req.user.suspensionReason,
+//                     endDate: req.user.suspensionEndDate
+//                 }
+//             });
+//         }
+//         // If suspension has expired, remove it
+//         req.user.isSuspended = false;
+//         req.user.suspensionDate = null;
+//         req.user.suspensionEndDate = null;
+//         req.user.suspensionReason = null;
+//         await req.user.save();
+//     }
+//     next();
+// };
+// // To use this code, you'll need to:
+// // Install required dependencies:
+// // bash
+// // npm install express mongoose express-validator
+// // Set up your MongoDB connection:
+// // javascript
+// // db.js
+// const mongoose = require('mongoose');
+
+// const connectDB = async () => {
+//     try {
+//         await mongoose.connect('mongodb://localhost:27017/yourdb', {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true
+//         });
+//         console.log('MongoDB connected');
+//     } catch (error) {
+//         console.error('MongoDB connection error:', error);
+//         process.exit(1);
+//     }
+// };
+
+// module.exports = connectDB;
+// // Set up your main app:
+// // javascript
+// // app.js
+// const express = require('express');
+// const connectDB = require('./db');
+// const userRoutes = require('./routes/userRoutes');
+// const authMiddleware = require('./middleware/auth');
+// const checkSuspension = require('./middleware/checkSuspension');
+
+// const app = express();
+
+// // Connect to database
+// connectDB();
+
+// // Middleware
+// app.use(express.json());
+// app.use('/api/users', authMiddleware, checkSuspension, userRoutes);
+
+// // const PORT = process.env.PORT || 3000;
+// // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// // Key features of this suspension system:
+// // Only admins can suspend users
+// // Tracks suspension status, date, reason, and optional duration
+// // Includes validation for input data
+// // Automatically handles expired suspensions via middleware
+// // Returns detailed responses with success/failure status
+// // Includes error handling
+// // To suspend a user, make a PUT request to:
+// // PUT /api/users/suspend/:userId
+// // Body: {
+// //     "reason": "Violation of terms",  // optional
+// //     "duration": 7                   // optional, in days
+// // }
+// // This is different from a delete function because:
+// // It preserves user data instead of removing it
+// // Can be temporary (with duration) or permanent
+// // Allows for reinstatement
+// // Maintains a record of the action
+// // Remember to:
+// // Add proper authentication middleware
+// // Adjust the model fields based on your needs
+// // Add additional validation as required
+// // Implement proper security measures
+// // Add logging for admin actions

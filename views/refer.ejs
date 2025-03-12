@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+
+<html lang="en" style="height: auto; min-height: 100%;"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="index_files/logo.png">
+
+    <title>User Dashboard - Trade Genesis</title>
+    
+    <!-- Vendors Style-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="index_files/vendors_css.css">
+    <!--amcharts -->
+    <link href="index_files/export.css" rel="stylesheet" type="text/css"> 
+    
+    <!-- Style-->  
+    <link rel="stylesheet" href="index_files/style.css">
+    <link rel="stylesheet" href="index_files/skin_color.css">
+    <link rel="stylesheet" href="index_files/custom.css">
+    
+    <style type="text/css">
+        .apexcharts-canvas {
+            position: relative;
+            user-select: none;
+        }
+
+
+        /* scrollbar is not visible by default for legend, hence forcing the visibility */
+        .apexcharts-canvas ::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 6px;
+        }
+
+        .apexcharts-canvas ::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, .5);
+            box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+            -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+        }
+
+        .apexcharts-canvas.apexcharts-theme-dark {
+            background: #424242;
+        }
+
+        .apexcharts-inner {
+            position: relative;
+        }
+
+        .apexcharts-text tspan {
+            font-family: inherit;
+        }
+
+        .legend-mouseover-inactive {
+            transition: 0.15s ease all;
+            opacity: 0.20;
+        }
+
+        .apexcharts-series-collapsed {
+            opacity: 0;
+        }
+
+        .apexcharts-tooltip {
+            border-radius: 5px;
+            box-shadow: 2px 2px 6px -4px #999;
+            cursor: default;
+            font-size: 14px;
+            left: 62px;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 12;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-tooltip.apexcharts-active {
+            opacity: 1;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-tooltip.apexcharts-theme-light {
+            border: 1px solid #e3e3e3;
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .apexcharts-tooltip.apexcharts-theme-dark {
+            color: #fff;
+            background: rgba(30, 30, 30, 0.8);
+        }
+
+        .apexcharts-tooltip * {
+            font-family: inherit;
+        }
+
+
+        .apexcharts-tooltip-title {
+            padding: 6px;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+        background: #ECEFF1;
+        border-bottom: 1px solid #ddd;
+        }
+
+        .apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+        background: rgba(0, 0, 0, 0.7);
+        border-bottom: 1px solid #333;
+        }
+
+        .apexcharts-tooltip-text-value,
+        .apexcharts-tooltip-text-z-value {
+        display: inline-block;
+        font-weight: 600;
+        margin-left: 5px;
+        }
+
+        .apexcharts-tooltip-text-z-label:empty,
+        .apexcharts-tooltip-text-z-value:empty {
+        display: none;
+        }
+
+        .apexcharts-tooltip-text-value,
+        .apexcharts-tooltip-text-z-value {
+        font-weight: 600;
+        }
+
+        .apexcharts-tooltip-marker {
+        width: 12px;
+        height: 12px;
+        position: relative;
+        top: 0px;
+        margin-right: 10px;
+        border-radius: 50%;
+        }
+
+        .apexcharts-tooltip-series-group {
+        padding: 0 10px;
+        display: none;
+        text-align: left;
+        justify-content: left;
+        align-items: center;
+        }
+
+        .apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+        opacity: 1;
+        }
+
+        .apexcharts-tooltip-series-group.apexcharts-active,
+        .apexcharts-tooltip-series-group:last-child {
+        padding-bottom: 4px;
+        }
+
+        .apexcharts-tooltip-series-group-hidden {
+        opacity: 0;
+        height: 0;
+        line-height: 0;
+        padding: 0 !important;
+        }
+
+        .apexcharts-tooltip-y-group {
+        padding: 6px 0 5px;
+        }
+
+        .apexcharts-tooltip-candlestick {
+        padding: 4px 8px;
+        }
+
+        .apexcharts-tooltip-candlestick>div {
+        margin: 4px 0;
+        }
+
+        .apexcharts-tooltip-candlestick span.value {
+        font-weight: bold;
+        }
+
+        .apexcharts-tooltip-rangebar {
+        padding: 5px 8px;
+        }
+
+        .apexcharts-tooltip-rangebar .category {
+        font-weight: 600;
+        color: #777;
+        }
+
+        .apexcharts-tooltip-rangebar .series-name {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        }
+
+        .apexcharts-xaxistooltip {
+        opacity: 0;
+        padding: 9px 10px;
+        pointer-events: none;
+        color: #373d3f;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 10;
+        background: #ECEFF1;
+        border: 1px solid #90A4AE;
+        transition: 0.15s ease all;
+        }
+
+        .apexcharts-xaxistooltip.apexcharts-theme-dark {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        color: #fff;
+        }
+
+        .apexcharts-xaxistooltip:after,
+        .apexcharts-xaxistooltip:before {
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        }
+
+        .apexcharts-xaxistooltip:after {
+        border-color: rgba(236, 239, 241, 0);
+        border-width: 6px;
+        margin-left: -6px;
+        }
+
+        .apexcharts-xaxistooltip:before {
+        border-color: rgba(144, 164, 174, 0);
+        border-width: 7px;
+        margin-left: -7px;
+        }
+
+        .apexcharts-xaxistooltip-bottom:after,
+        .apexcharts-xaxistooltip-bottom:before {
+        bottom: 100%;
+        }
+
+        .apexcharts-xaxistooltip-top:after,
+        .apexcharts-xaxistooltip-top:before {
+        top: 100%;
+        }
+
+        .apexcharts-xaxistooltip-bottom:after {
+        border-bottom-color: #ECEFF1;
+        }
+
+        .apexcharts-xaxistooltip-bottom:before {
+        border-bottom-color: #90A4AE;
+        }
+
+        .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+        border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+        border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip-top:after {
+        border-top-color: #ECEFF1
+        }
+
+        .apexcharts-xaxistooltip-top:before {
+        border-top-color: #90A4AE;
+        }
+
+        .apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+        border-top-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+        border-top-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip.apexcharts-active {
+        opacity: 1;
+        transition: 0.15s ease all;
+        }
+
+        .apexcharts-yaxistooltip {
+        opacity: 0;
+        padding: 4px 10px;
+        pointer-events: none;
+        color: #373d3f;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 10;
+        background: #ECEFF1;
+        border: 1px solid #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip.apexcharts-theme-dark {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        color: #fff;
+        }
+
+        .apexcharts-yaxistooltip:after,
+        .apexcharts-yaxistooltip:before {
+        top: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        }
+
+        .apexcharts-yaxistooltip:after {
+        border-color: rgba(236, 239, 241, 0);
+        border-width: 6px;
+        margin-top: -6px;
+        }
+
+        .apexcharts-yaxistooltip:before {
+        border-color: rgba(144, 164, 174, 0);
+        border-width: 7px;
+        margin-top: -7px;
+        }
+
+        .apexcharts-yaxistooltip-left:after,
+        .apexcharts-yaxistooltip-left:before {
+        left: 100%;
+        }
+
+        .apexcharts-yaxistooltip-right:after,
+        .apexcharts-yaxistooltip-right:before {
+        right: 100%;
+        }
+
+        .apexcharts-yaxistooltip-left:after {
+        border-left-color: #ECEFF1;
+        }
+
+        .apexcharts-yaxistooltip-left:before {
+        border-left-color: #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+        border-left-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+        border-left-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip-right:after {
+        border-right-color: #ECEFF1;
+        }
+
+        .apexcharts-yaxistooltip-right:before {
+        border-right-color: #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+        border-right-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+        border-right-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip.apexcharts-active {
+        opacity: 1;
+        }
+
+        .apexcharts-yaxistooltip-hidden {
+        display: none;
+        }
+
+        .apexcharts-xcrosshairs,
+        .apexcharts-ycrosshairs {
+        pointer-events: none;
+        opacity: 0;
+        transition: 0.15s ease all;
+        }
+
+        .apexcharts-xcrosshairs.apexcharts-active,
+        .apexcharts-ycrosshairs.apexcharts-active {
+        opacity: 1;
+        transition: 0.15s ease all;
+        }
+
+        .apexcharts-ycrosshairs-hidden {
+        opacity: 0;
+        }
+
+        .apexcharts-selection-rect {
+        cursor: move;
+        }
+
+        .svg_select_boundingRect, .svg_select_points_rot {
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        }
+        .apexcharts-selection-rect + g .svg_select_boundingRect,
+        .apexcharts-selection-rect + g .svg_select_points_rot {
+        opacity: 0;
+        visibility: hidden;
+        }
+
+        .apexcharts-selection-rect + g .svg_select_points_l,
+        .apexcharts-selection-rect + g .svg_select_points_r {
+        cursor: ew-resize;
+        opacity: 1;
+        visibility: visible;
+        }
+
+        .svg_select_points {
+        fill: #efefef;
+        stroke: #333;
+        rx: 2;
+        }
+
+        .apexcharts-canvas.apexcharts-zoomable .hovering-zoom {
+        cursor: crosshair
+        }
+
+        .apexcharts-canvas.apexcharts-zoomable .hovering-pan {
+        cursor: move
+        }
+
+        .apexcharts-zoom-icon,
+        .apexcharts-zoomin-icon,
+        .apexcharts-zoomout-icon,
+        .apexcharts-reset-icon,
+        .apexcharts-pan-icon,
+        .apexcharts-selection-icon,
+        .apexcharts-menu-icon,
+        .apexcharts-toolbar-custom-icon {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        line-height: 24px;
+        color: #6E8192;
+        text-align: center;
+        }
+
+        .apexcharts-zoom-icon svg,
+        .apexcharts-zoomin-icon svg,
+        .apexcharts-zoomout-icon svg,
+        .apexcharts-reset-icon svg,
+        .apexcharts-menu-icon svg {
+        fill: #6E8192;
+        }
+
+        .apexcharts-selection-icon svg {
+        fill: #444;
+        transform: scale(0.76)
+        }
+
+        .apexcharts-theme-dark .apexcharts-zoom-icon svg,
+        .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+        .apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+        .apexcharts-theme-dark .apexcharts-reset-icon svg,
+        .apexcharts-theme-dark .apexcharts-pan-icon svg,
+        .apexcharts-theme-dark .apexcharts-selection-icon svg,
+        .apexcharts-theme-dark .apexcharts-menu-icon svg,
+        .apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+        fill: #f3f4f5;
+        }
+
+        .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+        .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+        .apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+        fill: #008FFB;
+        }
+
+        .apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+        .apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+        .apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+        .apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+        .apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+        .apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+        fill: #333;
+        }
+
+        .apexcharts-selection-icon,
+        .apexcharts-menu-icon {
+        position: relative;
+        }
+
+        .apexcharts-reset-icon {
+        margin-left: 5px;
+        }
+
+        .apexcharts-zoom-icon,
+        .apexcharts-reset-icon,
+        .apexcharts-menu-icon {
+        transform: scale(0.85);
+        }
+
+        .apexcharts-zoomin-icon,
+        .apexcharts-zoomout-icon {
+        transform: scale(0.7)
+        }
+
+        .apexcharts-zoomout-icon {
+        margin-right: 3px;
+        }
+
+        .apexcharts-pan-icon {
+        transform: scale(0.62);
+        position: relative;
+        left: 1px;
+        top: 0px;
+        }
+
+        .apexcharts-pan-icon svg {
+        fill: #fff;
+        stroke: #6E8192;
+        stroke-width: 2;
+        }
+
+        .apexcharts-pan-icon.apexcharts-selected svg {
+        stroke: #008FFB;
+        }
+
+        .apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+        stroke: #333;
+        }
+
+        .apexcharts-toolbar {
+        position: absolute;
+        z-index: 11;
+        max-width: 176px;
+        text-align: right;
+        border-radius: 3px;
+        padding: 0px 6px 2px 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        }
+
+        .apexcharts-menu {
+        background: #fff;
+        position: absolute;
+        top: 100%;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 3px;
+        right: 10px;
+        opacity: 0;
+        min-width: 110px;
+        transition: 0.15s ease all;
+        pointer-events: none;
+        }
+
+        .apexcharts-menu.apexcharts-menu-open {
+        opacity: 1;
+        pointer-events: all;
+        transition: 0.15s ease all;
+        }
+
+        .apexcharts-menu-item {
+        padding: 6px 7px;
+        font-size: 12px;
+        cursor: pointer;
+        }
+
+        .apexcharts-theme-light .apexcharts-menu-item:hover {
+        background: #eee;
+        }
+
+        .apexcharts-theme-dark .apexcharts-menu {
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        }
+
+        @media screen and (min-width: 768px) {
+        .apexcharts-canvas:hover .apexcharts-toolbar {
+            opacity: 1;
+        }
+        }
+
+        .apexcharts-datalabel.apexcharts-element-hidden {
+        opacity: 0;
+        }
+
+        .apexcharts-pie-label,
+        .apexcharts-datalabels,
+        .apexcharts-datalabel,
+        .apexcharts-datalabel-label,
+        .apexcharts-datalabel-value {
+        cursor: default;
+        pointer-events: none;
+        }
+
+        .apexcharts-pie-label-delay {
+        opacity: 0;
+        animation-name: opaque;
+        animation-duration: 0.3s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease;
+        }
+
+        .apexcharts-canvas .apexcharts-element-hidden {
+        opacity: 0;
+        }
+
+        .apexcharts-hide .apexcharts-series-points {
+        opacity: 0;
+        }
+
+        .apexcharts-gridline,
+        .apexcharts-annotation-rect,
+        .apexcharts-tooltip .apexcharts-marker,
+        .apexcharts-area-series .apexcharts-area,
+        .apexcharts-line,
+        .apexcharts-zoom-rect,
+        .apexcharts-toolbar svg,
+        .apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+        .apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+        .apexcharts-radar-series path,
+        .apexcharts-radar-series polygon {
+        pointer-events: none;
+        }
+
+
+        /* markers */
+
+        .apexcharts-marker {
+        transition: 0.15s ease all;
+        }
+
+        @keyframes opaque {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+        }
+
+
+        /* Resize generated styles */
+
+        @keyframes resizeanim {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 0;
+        }
+        }
+
+        .resize-triggers {
+        animation: 1ms resizeanim;
+        visibility: hidden;
+        opacity: 0;
+        }
+
+        .resize-triggers,
+        .resize-triggers>div,
+        .contract-trigger:before {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        }
+
+        .resize-triggers>div {
+        background: #eee;
+        overflow: auto;
+        }
+
+        .contract-trigger:before {
+        width: 200%;
+        height: 200%;
+        }
+    </style>
+
+    <style>
+        .cke{visibility:hidden;}
+    </style>
+
+    <style type="text/css">
+        .jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}
+    </style>
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=Phg/d=0/rs=AN8SPfor9mOnrVSOJ5Dp4JexmA5DU8Siog/m=el_main_css"><script type="text/javascript" charset="UTF-8" src="https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_GB.eh9MTLIfVc8.O/am=AIA/d=1/exm=el_conf/ed=1/rs=AN8SPfpTqZtTPDVWvJoeUq4g_bzhjkW5eQ/m=el_main"></script><style type="text/css">.apexcharts-canvas {
+position: relative;
+user-select: none;
+/* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+}
+
+
+/* scrollbar is not visible by default for legend, hence forcing the visibility */
+.apexcharts-canvas ::-webkit-scrollbar {
+-webkit-appearance: none;
+width: 6px;
+}
+
+.apexcharts-canvas ::-webkit-scrollbar-thumb {
+border-radius: 4px;
+background-color: rgba(0, 0, 0, .5);
+box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.apexcharts-canvas.apexcharts-theme-dark {
+background: #424242;
+}
+
+.apexcharts-inner {
+position: relative;
+}
+
+.apexcharts-text tspan {
+font-family: inherit;
+}
+
+.legend-mouseover-inactive {
+transition: 0.15s ease all;
+opacity: 0.20;
+}
+
+.apexcharts-series-collapsed {
+opacity: 0;
+}
+
+.apexcharts-tooltip {
+border-radius: 5px;
+box-shadow: 2px 2px 6px -4px #999;
+cursor: default;
+font-size: 14px;
+left: 62px;
+opacity: 0;
+pointer-events: none;
+position: absolute;
+top: 20px;
+overflow: hidden;
+white-space: nowrap;
+z-index: 12;
+transition: 0.15s ease all;
+}
+
+.apexcharts-tooltip.apexcharts-active {
+opacity: 1;
+transition: 0.15s ease all;
+}
+
+.apexcharts-tooltip.apexcharts-theme-light {
+border: 1px solid #e3e3e3;
+background: rgba(255, 255, 255, 0.96);
+}
+
+.apexcharts-tooltip.apexcharts-theme-dark {
+color: #fff;
+background: rgba(30, 30, 30, 0.8);
+}
+
+.apexcharts-tooltip * {
+font-family: inherit;
+}
+
+
+.apexcharts-tooltip-title {
+padding: 6px;
+font-size: 15px;
+margin-bottom: 4px;
+}
+
+.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+background: #ECEFF1;
+border-bottom: 1px solid #ddd;
+}
+
+.apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+background: rgba(0, 0, 0, 0.7);
+border-bottom: 1px solid #333;
+}
+
+.apexcharts-tooltip-text-value,
+.apexcharts-tooltip-text-z-value {
+display: inline-block;
+font-weight: 600;
+margin-left: 5px;
+}
+
+.apexcharts-tooltip-text-z-label:empty,
+.apexcharts-tooltip-text-z-value:empty {
+display: none;
+}
+
+.apexcharts-tooltip-text-value,
+.apexcharts-tooltip-text-z-value {
+font-weight: 600;
+}
+
+.apexcharts-tooltip-marker {
+width: 12px;
+height: 12px;
+position: relative;
+top: 0px;
+margin-right: 10px;
+border-radius: 50%;
+}
+
+.apexcharts-tooltip-series-group {
+padding: 0 10px;
+display: none;
+text-align: left;
+justify-content: left;
+align-items: center;
+}
+
+.apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+opacity: 1;
+}
+
+.apexcharts-tooltip-series-group.apexcharts-active,
+.apexcharts-tooltip-series-group:last-child {
+padding-bottom: 4px;
+}
+
+.apexcharts-tooltip-series-group-hidden {
+opacity: 0;
+height: 0;
+line-height: 0;
+padding: 0 !important;
+}
+
+.apexcharts-tooltip-y-group {
+padding: 6px 0 5px;
+}
+
+.apexcharts-tooltip-candlestick {
+padding: 4px 8px;
+}
+
+.apexcharts-tooltip-candlestick>div {
+margin: 4px 0;
+}
+
+.apexcharts-tooltip-candlestick span.value {
+font-weight: bold;
+}
+
+.apexcharts-tooltip-rangebar {
+padding: 5px 8px;
+}
+
+.apexcharts-tooltip-rangebar .category {
+font-weight: 600;
+color: #777;
+}
+
+.apexcharts-tooltip-rangebar .series-name {
+font-weight: bold;
+display: block;
+margin-bottom: 5px;
+}
+
+.apexcharts-xaxistooltip {
+opacity: 0;
+padding: 9px 10px;
+pointer-events: none;
+color: #373d3f;
+font-size: 13px;
+text-align: center;
+border-radius: 2px;
+position: absolute;
+z-index: 10;
+background: #ECEFF1;
+border: 1px solid #90A4AE;
+transition: 0.15s ease all;
+}
+
+.apexcharts-xaxistooltip.apexcharts-theme-dark {
+background: rgba(0, 0, 0, 0.7);
+border: 1px solid rgba(0, 0, 0, 0.5);
+color: #fff;
+}
+
+.apexcharts-xaxistooltip:after,
+.apexcharts-xaxistooltip:before {
+left: 50%;
+border: solid transparent;
+content: " ";
+height: 0;
+width: 0;
+position: absolute;
+pointer-events: none;
+}
+
+.apexcharts-xaxistooltip:after {
+border-color: rgba(236, 239, 241, 0);
+border-width: 6px;
+margin-left: -6px;
+}
+
+.apexcharts-xaxistooltip:before {
+border-color: rgba(144, 164, 174, 0);
+border-width: 7px;
+margin-left: -7px;
+}
+
+.apexcharts-xaxistooltip-bottom:after,
+.apexcharts-xaxistooltip-bottom:before {
+bottom: 100%;
+}
+
+.apexcharts-xaxistooltip-top:after,
+.apexcharts-xaxistooltip-top:before {
+top: 100%;
+}
+
+.apexcharts-xaxistooltip-bottom:after {
+border-bottom-color: #ECEFF1;
+}
+
+.apexcharts-xaxistooltip-bottom:before {
+border-bottom-color: #90A4AE;
+}
+
+.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip-top:after {
+border-top-color: #ECEFF1
+}
+
+.apexcharts-xaxistooltip-top:before {
+border-top-color: #90A4AE;
+}
+
+.apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+border-top-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+border-top-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-xaxistooltip.apexcharts-active {
+opacity: 1;
+transition: 0.15s ease all;
+}
+
+.apexcharts-yaxistooltip {
+opacity: 0;
+padding: 4px 10px;
+pointer-events: none;
+color: #373d3f;
+font-size: 13px;
+text-align: center;
+border-radius: 2px;
+position: absolute;
+z-index: 10;
+background: #ECEFF1;
+border: 1px solid #90A4AE;
+}
+
+.apexcharts-yaxistooltip.apexcharts-theme-dark {
+background: rgba(0, 0, 0, 0.7);
+border: 1px solid rgba(0, 0, 0, 0.5);
+color: #fff;
+}
+
+.apexcharts-yaxistooltip:after,
+.apexcharts-yaxistooltip:before {
+top: 50%;
+border: solid transparent;
+content: " ";
+height: 0;
+width: 0;
+position: absolute;
+pointer-events: none;
+}
+
+.apexcharts-yaxistooltip:after {
+border-color: rgba(236, 239, 241, 0);
+border-width: 6px;
+margin-top: -6px;
+}
+
+.apexcharts-yaxistooltip:before {
+border-color: rgba(144, 164, 174, 0);
+border-width: 7px;
+margin-top: -7px;
+}
+
+.apexcharts-yaxistooltip-left:after,
+.apexcharts-yaxistooltip-left:before {
+left: 100%;
+}
+
+.apexcharts-yaxistooltip-right:after,
+.apexcharts-yaxistooltip-right:before {
+right: 100%;
+}
+
+.apexcharts-yaxistooltip-left:after {
+border-left-color: #ECEFF1;
+}
+
+.apexcharts-yaxistooltip-left:before {
+border-left-color: #90A4AE;
+}
+
+.apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+border-left-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+border-left-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip-right:after {
+border-right-color: #ECEFF1;
+}
+
+.apexcharts-yaxistooltip-right:before {
+border-right-color: #90A4AE;
+}
+
+.apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+border-right-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+border-right-color: rgba(0, 0, 0, 0.5);
+}
+
+.apexcharts-yaxistooltip.apexcharts-active {
+opacity: 1;
+}
+
+.apexcharts-yaxistooltip-hidden {
+display: none;
+}
+
+.apexcharts-xcrosshairs,
+.apexcharts-ycrosshairs {
+pointer-events: none;
+opacity: 0;
+transition: 0.15s ease all;
+}
+
+.apexcharts-xcrosshairs.apexcharts-active,
+.apexcharts-ycrosshairs.apexcharts-active {
+opacity: 1;
+transition: 0.15s ease all;
+}
+
+.apexcharts-ycrosshairs-hidden {
+opacity: 0;
+}
+
+.apexcharts-selection-rect {
+cursor: move;
+}
+
+.svg_select_boundingRect, .svg_select_points_rot {
+pointer-events: none;
+opacity: 0;
+visibility: hidden;
+}
+.apexcharts-selection-rect + g .svg_select_boundingRect,
+.apexcharts-selection-rect + g .svg_select_points_rot {
+opacity: 0;
+visibility: hidden;
+}
+
+.apexcharts-selection-rect + g .svg_select_points_l,
+.apexcharts-selection-rect + g .svg_select_points_r {
+cursor: ew-resize;
+opacity: 1;
+visibility: visible;
+}
+
+.svg_select_points {
+fill: #efefef;
+stroke: #333;
+rx: 2;
+}
+
+.apexcharts-canvas.apexcharts-zoomable .hovering-zoom {
+cursor: crosshair
+}
+
+.apexcharts-canvas.apexcharts-zoomable .hovering-pan {
+cursor: move
+}
+
+.apexcharts-zoom-icon,
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon,
+.apexcharts-reset-icon,
+.apexcharts-pan-icon,
+.apexcharts-selection-icon,
+.apexcharts-menu-icon,
+.apexcharts-toolbar-custom-icon {
+cursor: pointer;
+width: 20px;
+height: 20px;
+line-height: 24px;
+color: #6E8192;
+text-align: center;
+}
+
+.apexcharts-zoom-icon svg,
+.apexcharts-zoomin-icon svg,
+.apexcharts-zoomout-icon svg,
+.apexcharts-reset-icon svg,
+.apexcharts-menu-icon svg {
+fill: #6E8192;
+}
+
+.apexcharts-selection-icon svg {
+fill: #444;
+transform: scale(0.76)
+}
+
+.apexcharts-theme-dark .apexcharts-zoom-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+.apexcharts-theme-dark .apexcharts-reset-icon svg,
+.apexcharts-theme-dark .apexcharts-pan-icon svg,
+.apexcharts-theme-dark .apexcharts-selection-icon svg,
+.apexcharts-theme-dark .apexcharts-menu-icon svg,
+.apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+fill: #f3f4f5;
+}
+
+.apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+fill: #008FFB;
+}
+
+.apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+.apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+.apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+.apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+fill: #333;
+}
+
+.apexcharts-selection-icon,
+.apexcharts-menu-icon {
+position: relative;
+}
+
+.apexcharts-reset-icon {
+margin-left: 5px;
+}
+
+.apexcharts-zoom-icon,
+.apexcharts-reset-icon,
+.apexcharts-menu-icon {
+transform: scale(0.85);
+}
+
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon {
+transform: scale(0.7)
+}
+
+.apexcharts-zoomout-icon {
+margin-right: 3px;
+}
+
+.apexcharts-pan-icon {
+transform: scale(0.62);
+position: relative;
+left: 1px;
+top: 0px;
+}
+
+.apexcharts-pan-icon svg {
+fill: #fff;
+stroke: #6E8192;
+stroke-width: 2;
+}
+
+.apexcharts-pan-icon.apexcharts-selected svg {
+stroke: #008FFB;
+}
+
+.apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+stroke: #333;
+}
+
+.apexcharts-toolbar {
+position: absolute;
+z-index: 11;
+max-width: 176px;
+text-align: right;
+border-radius: 3px;
+padding: 0px 6px 2px 6px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.apexcharts-menu {
+background: #fff;
+position: absolute;
+top: 100%;
+border: 1px solid #ddd;
+border-radius: 3px;
+padding: 3px;
+right: 10px;
+opacity: 0;
+min-width: 110px;
+transition: 0.15s ease all;
+pointer-events: none;
+}
+
+.apexcharts-menu.apexcharts-menu-open {
+opacity: 1;
+pointer-events: all;
+transition: 0.15s ease all;
+}
+
+.apexcharts-menu-item {
+padding: 6px 7px;
+font-size: 12px;
+cursor: pointer;
+}
+
+.apexcharts-theme-light .apexcharts-menu-item:hover {
+background: #eee;
+}
+
+.apexcharts-theme-dark .apexcharts-menu {
+background: rgba(0, 0, 0, 0.7);
+color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+.apexcharts-canvas:hover .apexcharts-toolbar {
+opacity: 1;
+}
+}
+
+.apexcharts-datalabel.apexcharts-element-hidden {
+opacity: 0;
+}
+
+.apexcharts-pie-label,
+.apexcharts-datalabels,
+.apexcharts-datalabel,
+.apexcharts-datalabel-label,
+.apexcharts-datalabel-value {
+cursor: default;
+pointer-events: none;
+}
+
+.apexcharts-pie-label-delay {
+opacity: 0;
+animation-name: opaque;
+animation-duration: 0.3s;
+animation-fill-mode: forwards;
+animation-timing-function: ease;
+}
+
+.apexcharts-canvas .apexcharts-element-hidden {
+opacity: 0;
+}
+
+.apexcharts-hide .apexcharts-series-points {
+opacity: 0;
+}
+
+.apexcharts-gridline,
+.apexcharts-annotation-rect,
+.apexcharts-tooltip .apexcharts-marker,
+.apexcharts-area-series .apexcharts-area,
+.apexcharts-line,
+.apexcharts-zoom-rect,
+.apexcharts-toolbar svg,
+.apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+.apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+.apexcharts-radar-series path,
+.apexcharts-radar-series polygon {
+pointer-events: none;
+}
+
+
+/* markers */
+
+.apexcharts-marker {
+transition: 0.15s ease all;
+}
+
+@keyframes opaque {
+0% {
+opacity: 0;
+}
+100% {
+opacity: 1;
+}
+}
+
+
+/* Resize generated styles */
+
+@keyframes resizeanim {
+from {
+opacity: 0;
+}
+to {
+opacity: 0;
+}
+}
+
+.resize-triggers {
+animation: 1ms resizeanim;
+visibility: hidden;
+opacity: 0;
+}
+
+.resize-triggers,
+.resize-triggers>div,
+.contract-trigger:before {
+content: " ";
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+width: 100%;
+overflow: hidden;
+}
+
+.resize-triggers>div {
+background: #eee;
+overflow: auto;
+}
+
+.contract-trigger:before {
+width: 200%;
+height: 200%;
+}</style>
+<!-- <link rel="stylesheet" href="https://code.jivosite.com/css/9ae5953/widget.css" class="jv-css"> -->
+</head>
+
+<body class="dark-skin theme-primary sidebar-mini fixed" style="height: auto; min-height: 100%; position: relative; top: 0px;">
+<div class="translator">
+    <div id="google_translate_element"><div class="skiptranslate goog-te-gadget" dir="ltr" style=""><div id=":0.targetLanguage"><select class="goog-te-combo" aria-label="Language Translate Widget"><option value="">Select Language</option><option value="ab">Abkhaz</option><option value="ace">Acehnese</option><option value="ach">Acholi</option><option value="aa">Afar</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="alz">Alur</option><option value="am">Amharic</option><option value="ar">Arabic</option><option value="hy">Armenian</option><option value="as">Assamese</option><option value="av">Avar</option><option value="awa">Awadhi</option><option value="ay">Aymara</option><option value="az">Azerbaijani</option><option value="ban">Balinese</option><option value="bal">Baluchi</option><option value="bm">Bambara</option><option value="bci">Baoulé</option><option value="ba">Bashkir</option><option value="eu">Basque</option><option value="btx">Batak Karo</option><option value="bts">Batak Simalungun</option><option value="bbc">Batak Toba</option><option value="be">Belarusian</option><option value="bem">Bemba</option><option value="bn">Bengali</option><option value="bew">Betawi</option><option value="bho">Bhojpuri</option><option value="bik">Bikol</option><option value="bs">Bosnian</option><option value="br">Breton</option><option value="bg">Bulgarian</option><option value="bua">Buryat</option><option value="yue">Cantonese</option><option value="ca">Catalan</option><option value="ceb">Cebuano</option><option value="ch">Chamorro</option><option value="ce">Chechen</option><option value="ny">Chichewa</option><option value="zh-CN">Chinese (Simplified)</option><option value="zh-TW">Chinese (Traditional)</option><option value="chk">Chuukese</option><option value="cv">Chuvash</option><option value="co">Corsican</option><option value="crh">Crimean Tatar</option><option value="hr">Croatian</option><option value="cs">Czech</option><option value="da">Danish</option><option value="fa-AF">Dari</option><option value="dv">Dhivehi</option><option value="din">Dinka</option><option value="doi">Dogri</option><option value="dov">Dombe</option><option value="nl">Dutch</option><option value="dyu">Dyula</option><option value="dz">Dzongkha</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="ee">Ewe</option><option value="fo">Faroese</option><option value="fj">Fijian</option><option value="tl">Filipino</option><option value="fi">Finnish</option><option value="fon">Fon</option><option value="fr">French</option><option value="fy">Frisian</option><option value="fur">Friulian</option><option value="ff">Fulani</option><option value="gaa">Ga</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gn">Guarani</option><option value="gu">Gujarati</option><option value="ht">Haitian Creole</option><option value="cnh">Hakha Chin</option><option value="ha">Hausa</option><option value="haw">Hawaiian</option><option value="iw">Hebrew</option><option value="hil">Hiligaynon</option><option value="hi">Hindi</option><option value="hmn">Hmong</option><option value="hu">Hungarian</option><option value="hrx">Hunsrik</option><option value="iba">Iban</option><option value="is">Icelandic</option><option value="ig">Igbo</option><option value="ilo">Ilocano</option><option value="id">Indonesian</option><option value="ga">Irish Gaelic</option><option value="it">Italian</option><option value="jam">Jamaican Patois</option><option value="ja">Japanese</option><option value="jw">Javanese</option><option value="kac">Jingpo</option><option value="kl">Kalaallisut</option><option value="kn">Kannada</option><option value="kr">Kanuri</option><option value="pam">Kapampangan</option><option value="kk">Kazakh</option><option value="kha">Khasi</option><option value="km">Khmer</option><option value="cgg">Kiga</option><option value="kg">Kikongo</option><option value="rw">Kinyarwanda</option><option value="ktu">Kituba</option><option value="trp">Kokborok</option><option value="kv">Komi</option><option value="gom">Konkani</option><option value="ko">Korean</option><option value="kri">Krio</option><option value="ku">Kurdish (Kurmanji)</option><option value="ckb">Kurdish (Sorani)</option><option value="ky">Kyrgyz</option><option value="lo">Lao</option><option value="ltg">Latgalian</option><option value="la">Latin</option><option value="lv">Latvian</option><option value="lij">Ligurian</option><option value="li">Limburgish</option><option value="ln">Lingala</option><option value="lt">Lithuanian</option><option value="lmo">Lombard</option><option value="lg">Luganda</option><option value="luo">Luo</option><option value="lb">Luxembourgish</option><option value="mk">Macedonian</option><option value="mad">Madurese</option><option value="mai">Maithili</option><option value="mak">Makassar</option><option value="mg">Malagasy</option><option value="ms">Malay</option><option value="ms-Arab">Malay (Jawi)</option><option value="ml">Malayalam</option><option value="mt">Maltese</option><option value="mam">Mam</option><option value="gv">Manx</option><option value="mi">Maori</option><option value="mr">Marathi</option><option value="mh">Marshallese</option><option value="mwr">Marwadi</option><option value="mfe">Mauritian Creole</option><option value="chm">Meadow Mari</option><option value="mni-Mtei">Meiteilon (Manipuri)</option><option value="min">Minang</option><option value="lus">Mizo</option><option value="mn">Mongolian</option><option value="my">Myanmar (Burmese)</option><option value="bm-Nkoo">N'Ko</option><option value="nhe">Nahuatl (Eastern Huasteca)</option><option value="ndc-ZW">Ndau</option><option value="nr">Ndebele (South)</option><option value="new">Nepal Bhasa (Newari)</option><option value="ne">Nepali</option><option value="no">Norwegian</option><option value="nus">Nuer</option><option value="oc">Occitan</option><option value="or">Odia (Oriya)</option><option value="om">Oromo</option><option value="os">Ossetian</option><option value="pag">Pangasinan</option><option value="pap">Papiamento</option><option value="ps">Pashto</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese (Brazil)</option><option value="pt-PT">Portuguese (Portugal)</option><option value="pa">Punjabi (Gurmukhi)</option><option value="pa-Arab">Punjabi (Shahmukhi)</option><option value="qu">Quechua</option><option value="kek">Qʼeqchiʼ</option><option value="rom">Romani</option><option value="ro">Romanian</option><option value="rn">Rundi</option><option value="ru">Russian</option><option value="se">Sami (North)</option><option value="sm">Samoan</option><option value="sg">Sango</option><option value="sa">Sanskrit</option><option value="sat-Latn">Santali</option><option value="gd">Scots Gaelic</option><option value="nso">Sepedi</option><option value="sr">Serbian</option><option value="st">Sesotho</option><option value="crs">Seychellois Creole</option><option value="shn">Shan</option><option value="sn">Shona</option><option value="scn">Sicilian</option><option value="szl">Silesian</option><option value="sd">Sindhi</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="so">Somali</option><option value="es">Spanish</option><option value="su">Sundanese</option><option value="sus">Susu</option><option value="sw">Swahili</option><option value="ss">Swati</option><option value="sv">Swedish</option><option value="ty">Tahitian</option><option value="tg">Tajik</option><option value="ber-Latn">Tamazight</option><option value="ber">Tamazight (Tifinagh)</option><option value="ta">Tamil</option><option value="tt">Tatar</option><option value="te">Telugu</option><option value="tet">Tetum</option><option value="th">Thai</option><option value="bo">Tibetan</option><option value="ti">Tigrinya</option><option value="tiv">Tiv</option><option value="tpi">Tok Pisin</option><option value="to">Tongan</option><option value="ts">Tsonga</option><option value="tn">Tswana</option><option value="tcy">Tulu</option><option value="tum">Tumbuka</option><option value="tr">Turkish</option><option value="tk">Turkmen</option><option value="tyv">Tuvan</option><option value="ak">Twi</option><option value="udm">Udmurt</option><option value="uk">Ukrainian</option><option value="ur">Urdu</option><option value="ug">Uyghur</option><option value="uz">Uzbek</option><option value="ve">Venda</option><option value="vec">Venetian</option><option value="vi">Vietnamese</option><option value="war">Waray</option><option value="cy">Welsh</option><option value="wo">Wolof</option><option value="xh">Xhosa</option><option value="sah">Yakut</option><option value="yi">Yiddish</option><option value="yo">Yoruba</option><option value="yua">Yucatec Maya</option><option value="zap">Zapotec</option><option value="zu">Zulu</option></select></div>Powered by <span style="white-space:nowrap"><a class="VIpgJd-ZVi9od-l4eHX-hSRGPd" href="https://translate.google.com" target="_blank"><img src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png" width="37px" height="14px" style="padding-right: 3px" alt="Google Translate">Translate</a></span></div></div>
+    <!-- <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script> -->
+        
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
+<div class="wrapper" style="height: auto; min-height: 100%;">
+<br>
+
+<header class="main-header">
+    <div class="d-flex align-items-center logo-box justify-content-start">	
+        <!-- Logo -->
+        <br><br>
+        <a href="/" class="logo">
+        <!-- logo-->
+        
+        <div class="logo-lg">
+            <span class="light-logo"><img src="index_files/logo.png" alt="logo" height="40px" width="150px"></span>
+            <span class="dark-logo"><img src="index_files/logo.png" alt="logo" height="40px" width="150px"></span>
+        </div>
+        </a>	
+    </div>  
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top">
+    <!-- Sidebar toggle button-->
+    <div class="app-menu" style="padding-right:50px;">
+
+        <ul class="header-megamenu nav" style="display: flex; list-style-type:none; justify-content: space-between;margin-top:15px;">
+
+            <li class="btn-group nav-item">
+                <a href="#" class="waves-effect waves-light nav-link push-btn btn-primary-light" data-toggle="push-menu" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-left"><line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line></svg>
+                </a>
+            </li>
+
+            <div style="display: flex;">
+
+                <li class="dropdown user user-menu topicon desktop-service-click" onclick="myFunction()">
+                    <a class="waves-effect waves-light notif dropdown-toggle btn-primary-light desktop-service-click" data-bs-toggle="dropdown" title="Notifications">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"></path></svg>
+                    </a>
+                </li>
+                <style>
+                    .notif{
+                        padding: 10px;
+                        border-radius: 6px;
+                    }
+                </style>
+
+                <li class="dropdown user user-menu topicon">
+                    <a href="/account" style="border-radius: 7px;" class=" push-btn waves-effect waves-light dropdown-toggle btn-primary-light" data-bs-toggle="dropdown" title="User Profile">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </li>	
+            </div>
+            
+        </ul> 
+
+    </div>
+        
+    <div class="navbar-custom-menu r-side">
+        <ul class="nav navbar-nav">
+        
+        </ul>
+    </div>
+
+    </nav>
+</header>
+
+<aside class="main-sidebar">
+    <!-- sidebar-->
+    <section class="sidebar position-relative">	
+        <div class="multinav">
+        <div class="multinav-scroll ps ps--active-y">	
+            <!-- sidebar menu-->
+            <ul class="sidebar-menu mt-sm-20 mt-40 tree" data-widget="tree" style="overflow-y: auto;">
+                    <style>
+                        .sidebar-menu a{
+                            text-decoration: none;
+                        }
+                        .active a{
+                            border-radius: 6px;
+                        }
+                    </style>
+
+                    <li>
+                    <a href="/dashboard" class="active" style="color: #008FFB;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    </li> 
+                    
+                    <li>
+                        <a href="/trades">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            <span>Trades</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/depositHistory/<%=user._id%>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart">
+                                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                            </svg>
+                            <span>Deposit history</span>
+                        </a>
+                    </li>
+                                    
+                    <li>
+                        <a href="/account/<%=user._id%>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+
+                 
+
+                    <li>
+                        <a href="/refer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                            <span>Refer</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/withdrawal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                            <span>Withdrawal</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/widthdrawHistory/<%=user._id%>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart">
+                                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                            </svg>
+                            <span>Widthdraw history</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/premium">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><path d="M12.89 1.45l8 4A2 2 0 0 1 22 7.24v9.53a2 2 0 0 1-1.11 1.79l-8 4a2 2 0 0 1-1.79 0l-8-4a2 2 0 0 1-1.1-1.8V7.24a2 2 0 0 1 1.11-1.79l8-4a2 2 0 0 1 1.78 0z"></path><polyline points="2.32 6.16 12 11 21.68 6.16"></polyline><line x1="12" y1="22.76" x2="12" y2="11"></line><line x1="7" y1="3.5" x2="17" y2="8.5"></line></svg>
+                            <span>Investment Plans</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/logout">
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-out"><path d="M12.89 1.45l8 4A2 2 0 0 1 22 7.24v9.53a2 2 0 0 1-1.11 1.79l-8 4a2 2 0 0 1-1.79 0l-8-4a2 2 0 0 1-1.1-1.8V7.24a2 2 0 0 1 1.11-1.79l8-4a2 2 0 0 1 1.78 0z"></path><polyline points="2.32 6.16 12 11 21.68 6.16"></polyline><line x1="12" y1="22.76" x2="12" y2="11"></line><line x1="7" y1="3.5" x2="17" y2="8.5"></line></svg> -->
+                            <span>Log Out</span>
+                        </a>
+                    </li>
+
+                    <br>
+
+                    <div class="sidebar-widgets">
+                        <div class="mx-25 mb-30 p-30 text-center bg-primary-light rounded5">
+                            <img src="index_files/trophy.png" alt="">
+                            <h4 class="my-3 fw-500 text-uppercase text-primary">Start Trading</h4>
+                            <span class="fs-12 d-block mb-3 text-black-50">Offering discounts for better online a store can loyalty weapon into driving</span>
+                            <button type="button" class="waves-effect waves-light btn btn-sm btn-primary mb-5"><a href="/premium" class="text-white">Invest Now</a></button>
+                        </div>
+                        
+                        <div class="copyright text-center m-25">
+                            <p><strong class="d-block">Trade Genesis</strong> © 2018 All Rights Reserved</p>
+                        </div>
+                    </div>
+            </ul>
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 402px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 199px;"></div></div></div>
+        </div>
+    </section>
+</aside>
+  
+  
+<section class="content">
+	
+
+    <div class="row">
+
+          
+             
+         <div class="col-lg-4">
+            <div class="box">
+              <div class="box-body text-center">
+                <div class="referral">
+                    <label for="">Referral Link</label>
+                    <br><br>
+                    <div class="wrapper">
+                    <input id="text" type="text" value="http://www.support@tradegenesis.org/register.php?ref=102343" disabled>
+                    <button class="referral-btn" type="button">
+                        Copy
+                        <i class="fa fa-copy"></i>
+                    </button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <style>
+            /* Referral Section */
+            .referral{
+                margin-top: 10px;
+                padding: 20px;
+                width: 80%;
+                /* box-shadow: 0 0 8px rgb(175, 174, 174); */
+                border-radius: 6px;
+                margin: auto;
+            }
+            .referral label{
+                font-size: 14px;
+                font-weight: 800;
+                color: rgb(161, 159, 159);
+            }
+            .wrapper{
+                display: flex;
+            }
+            .wrapper input{
+                height: 40px;
+                width: 70%;
+                margin-top: 2px;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+                padding-left: 10px;
+                outline: none;
+                color: rgb(220, 220, 220);
+                border: .5px solid black;
+            }
+            .wrapper button{
+                height: 39px;
+                width: 60px;
+                margin-left: 2px;
+                margin-top: 3px;
+                border: none;
+                border-top-right-radius: 8px;
+                border-bottom-right-radius: 8px;
+                background-color: rgb(71, 137, 218);
+                color: white;
+                font-weight: 600;
+            }
+            .wrapper button:hover{
+                background-color: rgb(36, 121, 226);
+                transition: all ease-in-out .7s;
+                color: rgb(198, 195, 195);
+            }
+          </style>
+          <script>
+            // Click on button to copy text
+            const btn = document.querySelector(".referral-btn");
+            const text = document.getElementById("text");
+            btn.addEventListener("click", () => {
+            // Select Input text content
+            text.focus();
+            text.select();
+            // Copy content to clipboard
+            // document.execCommand('copy');
+            navigator.clipboard.writeText(text.value);
+            // Remember the button current text
+            const oldText = btn.innerHTML;
+            // Set the button text to 'copied'
+            btn.innerHTML = "Copied ";
+            btn.classList.toggle("cursor-on");
+            // After 1.5s change back to default btn text
+            setTimeout(() => {
+                btn.innerHTML = oldText;
+                btn.classList.toggle("cursor-on");
+            }, 1500);
+            });
+          </script>
+          
+        </div>
+
+</section>
+
+
+<!-- Content Wrapper. Contains page content -->
+
+
+<!-- Vendor JS -->
+<script src="js/jquery.js"></script>
+<script src="profile_files/chat-popup.js.download.js"></script>
+<script src="profile_files/feather.min.js.download.js"></script>	
+
+<script src="profile_files/apexcharts.js.download.js"></script>
+<script src="profile_files/jquery.webticker.min.js.download.js"></script>	
+<script src="profile_files/datatables.min.js.download.js"></script>
+<script src="profile_files/jquery.peity.js.download.js"></script>
+<!-- Crypto Admin App -->
+<script src="profile_files/template.js.download.js"></script>
+<script src="profile_files/dashboard5.js.download.js"></script>
+<script src="profile_files/data-table.js.download.js"></script>
+<script src="profile_files/app-ticket.js.download.js"></script>
+
+<script src="profile_files/flipclock.min.js.download.js"></script>
+<!--<script src="js/pages/countdown.js"></script>-->
+
+<!-- ===== Style Switcher JS ===== -->
+<script src="profile_files/jQuery.style.switcher.js.download.js"></script>
+<script type="text/javascript">
+    function copyText() {
+      var copyText = document.getElementById("myInput");
+        //copyText.select();
+        //copyText.setSelectionRange(0, 99999);
+        navigator.clipboard
+          .writeText(copyText.value)
+          .then(() => {
+            alert("Referral code copied");
+          })
+          .catch(() => {
+            alert("something went wrong");
+          });
+
+    }
+</script>
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+<!-- <script src="//code.jivosite.com/widget/KeBCABelKp" async=""></script> -->
+
+<script src="profile_files/svptx9cuv7kefzikxgtrul0akialyvvs.js.download" async=""></script>
+<!-- <script src="//code.jivosite.com/widget/KeBCABelKp" async=""></script> -->
+
+</div></div><style>.tradingview-widget-copyright {font-size: 13px !important; line-height: 32px !important; text-align: center !important; vertical-align: middle !important; font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif !important; color: #B2B5BE !important;} .tradingview-widget-copyright .blue-text {color: #2962FF !important;} .tradingview-widget-copyright a {text-decoration: none !important; color: #B2B5BE !important;} .tradingview-widget-copyright a:visited {color: #B2B5BE !important;} .tradingview-widget-copyright a:hover .blue-text {color: #1E53E5 !important;} .tradingview-widget-copyright a:active .blue-text {color: #1848CC !important;} .tradingview-widget-copyright a:visited .blue-text {color: #2962FF !important;}</style><svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1002"></defs><polyline id="SvgjsPolyline1003" points="0,0"></polyline><path id="SvgjsPath1004" d="M0 0 "></path></svg><div id="goog-gt-tt" class="VIpgJd-yAWNEb-L7lbkb skiptranslate" style="border-radius: 12px; margin: 0 0 0 -23px; padding: 0; font-family: 'Google Sans', Arial, sans-serif;" data-id=""><div id="goog-gt-vt" class="VIpgJd-yAWNEb-hvhgNd"><div class=" VIpgJd-yAWNEb-hvhgNd-l4eHX-i3jM8c"><img src="https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg" width="24" height="24" alt=""></div><div class=" VIpgJd-yAWNEb-hvhgNd-k77Iif-i3jM8c"><div class="VIpgJd-yAWNEb-hvhgNd-IuizWc" dir="ltr">Original text</div><div id="goog-gt-original-text" class="VIpgJd-yAWNEb-nVMfcd-fmcmS VIpgJd-yAWNEb-hvhgNd-axAV1"></div></div><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid ltr"><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od ltr" dir="ltr"><div class="VIpgJd-yAWNEb-hvhgNd-UTujCb">Rate this translation</div><div class="VIpgJd-yAWNEb-hvhgNd-eO9mKe">Your feedback will be used to help improve Google Translate</div></div><div class="VIpgJd-yAWNEb-hvhgNd-xgov5 ltr"><button id="goog-gt-thumbUpButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="Good translation" aria-label="Good translation" aria-pressed="false"><span id="goog-gt-thumbUpIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7H2v13h16c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM7 18H4V9h3v9zm14-7l-3 7H9V8l4.34-4.34L12 9h9v2z"></path></svg></span><span id="goog-gt-thumbUpIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7v13h11c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM5 7H1v13h4V7z"></path></svg></span></button><button id="goog-gt-thumbDownButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="Poor translation" aria-label="Poor translation" aria-pressed="false"><span id="goog-gt-thumbDownIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7h5V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zM17 6h3v9h-3V6zM3 13l3-7h9v10l-4.34 4.34L12 15H3v-2z"></path></svg></span><span id="goog-gt-thumbDownIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zm16 0h4V4h-4v13z"></path></svg></span></button></div></div><div id="goog-gt-votingHiddenPane" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><form id="goog-gt-votingForm" action="//translate.googleapis.com/translate_voting?client=te" method="post" target="votingFrame" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><input type="text" name="sl" id="goog-gt-votingInputSrcLang"><input type="text" name="tl" id="goog-gt-votingInputTrgLang"><input type="text" name="query" id="goog-gt-votingInputSrcText"><input type="text" name="gtrans" id="goog-gt-votingInputTrgText"><input type="text" name="vote" id="goog-gt-votingInputVote"></form><iframe name="votingFrame" frameborder="0"></iframe></div></div></div><iframe id="tidio-chat-code" title="Tidio Chat code" style="display: none;"></iframe><div class="VIpgJd-ZVi9od-aZ2wEe-wOHMyf"><div class="VIpgJd-ZVi9od-aZ2wEe-OiiCO"><svg xmlns="http://www.w3.org/2000/svg" class="VIpgJd-ZVi9od-aZ2wEe" width="96px" height="96px" viewBox="0 0 66 66"><circle class="VIpgJd-ZVi9od-aZ2wEe-Jt5cK" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div><div id="jivo-iframe-container" style="opacity: 0; visibility: hidden; width: 0px; height: 0px; overflow: hidden;"><iframe src="" role="presentation" allow="autoplay" title="Jivochat" name="jivo_container" id="jivo_container" frameborder="no"></iframe></div><jdiv><jdiv class="globalClass_eb4c global_c749 __light_e8bf __green_b2b5 jv-android jv-mobile jv-chrome jv-mobile-or-tablet"><jdiv class="wrap_d8a6 _orientationRight_e556 __jivoMobileButton"><jdiv class="button_be8d" style="background: linear-gradient(95deg, rgb(47, 50, 74) 20%, rgb(66, 72, 103) 80%);"><jdiv class="iconWrap_a534 _showLogo_c3d6"><jdiv class="jivoIcon_fe9e icons_cae1" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20width%3D%2210%22%20height%3D%2235%22%20viewBox%3D%220%200%209%2035%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M1.31%2034.966H.975c-.295%200-.53-.09-.71-.27C.09%2034.516%200%2034.3%200%2034.05v-2.33c0-.25.097-.465.288-.645.193-.18.42-.27.687-.27H1.3c1.776%200%203.223-1.37%203.238-3.06v-8.94H.975c-.236%200-.458-.09-.665-.27-.206-.18-.31-.395-.31-.645v-2.33c0-.223.104-.43.31-.625.207-.194.43-.292.665-.292h7.019c.266%200%20.494.09.687.27.192.182.29.396.29.646V27.77c0%20.032-.008.058-.01.09-.08%203.937-3.477%207.098-7.65%207.104zM.318%200C-.25%2011.117%208.62%2012.702%208.62%2012.702%208.17.522.318%200%20.318%200z%22%2F%3E%3C%2Fsvg%3E%0A&quot;);"></jdiv><jdiv class="envelopeIcon_f49b icons_cae1" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20width%3D%2225%22%20height%3D%2220%22%20viewBox%3D%220%200%2025%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill%3D'%23fff'%20d%3D%22M22.5%205l-10%206.25L2.5%205V2.5l10%206.25%2010-6.25V5zm0-5h-20A2.49%202.49%200%200%200%200%202.5v15A2.5%202.5%200%200%200%202.5%2020h20a2.5%202.5%200%200%200%202.5-2.5v-15A2.5%202.5%200%200%200%2022.5%200z%22%2F%3E%3C%2Fsvg%3E%0A&quot;);"></jdiv></jdiv></jdiv></jdiv><jdiv class="container_c99f"><jdiv class="image_cb81"></jdiv></jdiv><jdiv class="container_f76c"><jdiv class="zoomPane_de27"></jdiv><jdiv class="iconContainer_d6d0" style="width: 100%; height: 915px;"><jdiv class="viewContainer_c305" style="width: 412px; height: 915px; transform: translate(0px, 0px);"><jdiv class="view_dcd8" style="zoom: 1;"><jdiv class="iconContainer_cb1e"><jdiv class="hand_c95d" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20width%3D%22160%22%20height%3D%22173%22%20viewBox%3D%220%200%20160%20173%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3Ehand%3C%2Ftitle%3E%3Cpath%20d%3D%22M56.31%20169.5S8.685%20109%205.968%20106.25c-2.717-2.75-5.84-12.663%200-20.05C11.807%2078.816%2021.295%2082.95%2024%2085c2.705%202.05%2013.06%2010.5%2013.06%2010.5s7.646%206.35%2014.5%202.093c6.857-4.256%206.42-11.392%206.42-11.392s1.93-16.115-1.67-35.2C52.714%2031.915%2049%2025.25%2046.75%2020c-2.25-5.25-1.124-11.59%205.938-16.045C59.75-.5%2067%206.5%2068.5%209.25s6.396%209.49%2012.12%2027.253c5.722%2017.763%207.69%2041.372%207.69%2041.372l-2-23.25c5.576%200%2013.464-2.994%2024.017%209.168%204.736%205.457%206.86%2024.332%206.86%2024.332s-1.874-15.188-5.25-21.75c4.5-1.25%2012.583-4.006%2021.376%204.875%206.31%206.375%205.375%2023.25%205.375%2023.25s1.25-13.063-4.25-21.938c13.68-1.527%2019.937%2011.313%2021.937%2019.563%202%208.25-.875%2026.75-.875%2026.75l-14.19%2051.875%22%20stroke%3D%22%23A3AFB8%22%20fill-rule%3D%22nonzero%22%20stroke-width%3D%224%22%20fill%3D%22%23FFF%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E&quot;);"></jdiv><jdiv class="arrow_d3a1" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20width%3D%2259%22%20height%3D%2271%22%20viewBox%3D%220%200%2059%2071%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3EArrow1%3C%2Ftitle%3E%3Cg%20transform%3D%22rotate(163%2027.277%2033.133)%22%20fill%3D%22%2300A355%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20y%3D%2212%22%20width%3D%228%22%20height%3D%2248%22%20rx%3D%224%22%2F%3E%3Crect%20y%3D%2252%22%20width%3D%2248%22%20height%3D%228%22%20rx%3D%224%22%2F%3E%3Crect%20transform%3D%22rotate(-45%2030.523%2029.475)%22%20x%3D%22-6.477%22%20y%3D%2225.475%22%20width%3D%2274%22%20height%3D%228%22%20rx%3D%224%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E&quot;);"></jdiv><jdiv class="arrow2_cae9" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20width%3D%2259%22%20height%3D%2271%22%20viewBox%3D%220%200%2059%2071%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ctitle%3EArrow2%3C%2Ftitle%3E%3Cg%20transform%3D%22rotate(-17%2045.338%2020.625)%22%20fill%3D%22%2300A355%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20y%3D%2212%22%20width%3D%228%22%20height%3D%2248%22%20rx%3D%224%22%2F%3E%3Crect%20y%3D%2252%22%20width%3D%2248%22%20height%3D%228%22%20rx%3D%224%22%2F%3E%3Crect%20transform%3D%22rotate(-45%2030.523%2029.475)%22%20x%3D%22-6.477%22%20y%3D%2225.475%22%20width%3D%2274%22%20height%3D%228%22%20rx%3D%224%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E&quot;);"></jdiv></jdiv></jdiv></jdiv></jdiv></jdiv><jdiv class="jv-pseudo-height"></jdiv></jdiv></jdiv></body></html>
