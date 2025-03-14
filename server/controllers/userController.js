@@ -114,9 +114,9 @@ module.exports.aboutPage = (req, res)=>{
 
 
 module.exports.register_post = async (req, res) =>{
-    const { fullname, email,asset,currency, country,tel, password } = req.body;
+    const { fullname,gender,account, email,asset,currency, country,tel, password } = req.body;
     try {
-        const user = await User.create({fullname,currency,asset, email, country,tel, password });
+        const user = await User.create({fullname,email,gender,account,asset,currency, country,tel, password });
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(201).json({ user: user._id });

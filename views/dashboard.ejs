@@ -172,61 +172,225 @@
                 </div>
             </div>
         </div>
-        <!-- * Stats -->
+       
+      
+        <!-- * Transactions -->
+        <div class="section mt-2 mb-2"  id="content-page">
+            <!-- <div class="card" style="background-color:#191919;">
+                <div class="card-body">
+                    <form action="/dashboard" method="get" autocomplete="off" class="was-validated">
+                        
+                        <p style="font-size:18px; color:#f2f2f2;"><b>Execute Trades</b></p>
+                        
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="select4b" style="color:#cecece;">Select Trading Option</label>
+                                <select name="trading_type" class="form-control" required>
+                                    <option value="" style="font-size:25px;"><b>---Select Trading Type---</b></option>
+                                                                                                            <option value="CRYPTOCURRENCY" style="font-size:20px;">CRYPTOCURRENCY</option>
+                                                                                                            <option value="FOREX" style="font-size:20px;">FOREX</option>
+                                                                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Currency Pair</label>
+                                <input type="text" class="form-control"id="text4b" name="currency_pair" placeholder="Enter Currency Pair example: BTC/ETH" required>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Lot Size</label>
+                                <input type="text" class="form-control" name="lot_size" placeholder="Enter Lot Size" required>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Entry Price</label>
+                                <input type="text" class="form-control" id="text4b" name="entry_price" placeholder="Enter Entry Price" required>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Stop Loss</label>
+                                <input type="text" class="form-control" id="text4b" name="stop_loss" placeholder="Enter Stop Loss" required>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Take Profit</label>
+                                <input type="text" class="form-control" id="text4b" name="take_profit" placeholder="Enter Take Profit" required>
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <label class="label" for="text4b" style="color:#cecece;">Select Action</label>
+                                <select name="trading_action" class="form-control" required>
+                                                    <option value="" style="font-size:25px;"><b>---Select Trading Type---</b></option>
+                                                    <option value="BUY">BUY</option>
+                                                    <option value="SELL">SELL</option>
+                                                </select>
+                            </div>
+                        </div>
+                        <br>
+                          <button class="btn btn-outline-primary shadowed me-1 mb-1" name="live_trading" type="submit">Execute Trade</button>
+                    </form>
+                    
+                </div>
+            </div> -->
+<!-- <div class="section mt-2">
+            <div class="section-title" style="color:#f2f2f2;">Trade Execution table</div>
+            <p style="color:#cecece;">All Trades are saved here for refrencing. You can also <code>print</code> Trade History</p>
+            <div class="card" style="background-color:#191919;">
 
-         <!-- Transactions -->
+                <div class="table-responsive">
+                    <table id="datatable" class="table">
+                        <thead>
+                            <tr>
+                                <th style="color:#f2f2f2;">Trading Type</th>
+                                                    <th style="color:#f2f2f2;">Currency Pair</th>
+                                                    <th style="color:#f2f2f2;">Trading Action</th>
+                                                    <th style="color:#f2f2f2;">Entry Price</th>
+                                                    <th style="color:#f2f2f2;">Stop Loss</th>
+                                                    <th style="color:#f2f2f2;">Take Profit</th>
+                                                    <th style="color:#f2f2f2;">Status</th>
+                                                    <th style="color:#f2f2f2;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                    </tbody>
+                    </table>
+                    <button type="button" class="btn btn-text-primary" onclick="window.print()"><i class="las la-download"></i>Tap to Print</button>
+                </div>
+
+            </div>
+        </div> -->
+        <!-- Transactions -->
         <div class="section mt-4">
             <div class="transactions">
                 <!-- item -->
                 <a href="" class="item" style="background-color:#191919;">
                         <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                    <div class="tradingview-widget-container">
+                      <div class="tradingview-widget-container__widget"></div>
+                      <!-- <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/currencies/forex-cross-rates/" rel="noopener" target="_blank"><span class="blue-text">Forex Rates</span></a> by TradingView</div> -->
+                      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
+                        {
+                          "width": "100%",
+                          "height": "400",
+                          "currencies": [
+                          "BTC",
+                          "EUR",
+                          "USD",
+                          "JPY",
+                          "GBP",
+                          "CHF",
+                          "AUD",
+                          "CAD",
+                          "NZD",
+                          "CNY",
+                          "TRY",
+                          "SEK",
+                          "NOK"
+                          ],
+                          "isTransparent": false,
+                          "colorTheme": "dark",
+                          "locale": "en"
+                        }
+                      </script>
+                    </div>
+                    <!-- TradingView Widget END -->
+                    <div class="detail">
+                    </div>
+                </a>
+                <!-- * item -->
+            </div>
+        </div>
+
+        
+        <!-- * Transactions -->
+        <!-- Transactions -->
+        <div class="section mt-4">
+            <div class="transactions">
+                <!-- item -->
+                <a href="" class="item" style="background-color:#191919;">
+                       <div id="metals-tab" class="clearfix eael-tab-content-item inactive" data-title-link="metals-tab"><div class="tradingview-widget-container"><div id="tradingview_90e9a"></div><div class="tradingview-widget-copyright"></div> <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script> <script type="text/javascript">new TradingView.MediumWidget(
   {
   "symbols": [
-    {
-      "proName": "FOREXCOM:SPXUSD",
-      "title": "S&P 500"
-    },
-    {
-      "proName": "FOREXCOM:NSXUSD",
-      "title": "Nasdaq 100"
-    },
-    {
-      "proName": "FX_IDC:EURUSD",
-      "title": "EUR/USD"
-    },
-    {
-      "proName": "BITSTAMP:BTCUSD",
-      "title": "BTC/USD"
-    },
-    {
-      "proName": "BITSTAMP:ETHUSD",
-      "title": "ETH/USD"
-    },
-    {
-      "description": "LTC/USD",
-      "proName": "LITECOIN"
-    },
-    {
-      "description": "XRP/USD",
-      "proName": "BITSTAMP:XRPUSD"
-    },
-    {
-      "description": "ETH/XBT",
-      "proName": "KRAKEN:ETHXBT"
-    }
+    [
+      "GOLD",
+      "XAUUSD|12m"
+    ],
+    [
+      "SILVER",
+      "XAGUSD|12m"
+    ],
+    [
+      "PLATINUM",
+      "XPTUSD|12m"
+    ],
+    [
+      "GOLD/EURO",
+      "XAUEUR|12m"
+    ],
+    [
+      "SILVER/EURO",
+      "XAGEUR|12m"
+    ],
+    [
+      "GOLD/AUD",
+      "XAUAUD|12m"
+    ],
+    [
+      "SILVER/AUD",
+      "XAGAUD|12m"
+    ],
+    [
+      "GOLD/GBP",
+      "XAUGBP|12m"
+    ],
+    [
+      "SILVER/GBP",
+      "XAGGBP|12m"
+    ],
+    [
+      "GOLD/JPY",
+      "XAUJPY|12m"
+    ],
+    [
+      "SILVER/JPY",
+      "XAGJPY|12m"
+    ]
   ],
+  "chartOnly": false,
+  "width": "100%",
+  "height": "400",
+  "locale": "in",
   "colorTheme": "dark",
-  "isTransparent": false,
-  "largeChartUrl": "",
-  "displayMode": "adaptive",
-  "locale": "en"
+  "gridLineColor": "#2a2e39",
+  "trendLineColor": "rgba(230, 145, 56, 1)",
+  "fontColor": "#787b86",
+  "underLineColor": "rgba(55, 166, 239, 0.15)",
+  "isTransparent": true,
+  "autosize": true,
+  "container_id": "tradingview_90e9a"
 }
-  </script>
-</div>
-<!-- TradingView Widget END -->
+  );</script> </div></div>
                     <div class="detail">
                     </div>
                 </a>
@@ -234,48 +398,7 @@
             </div>
         </div>
         <!-- * Transactions -->
-        <!-- Transactions -->
-        <div class="section mt-4">
-            <div class="transactions">
-                <!-- item -->
-                        <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-  <script type="text/javascript">
-  new TradingView.widget(
-  {
-  "width": "100%",
-  "height": 610,
-  "symbol": "COINBASE:BTCUSD",
-  "timezone": "Etc/UTC",
-  "theme": "dark",
-  "style": "1",
-  "locale": "en",
-  "toolbar_bg": "#f1f3f6",
-  "enable_publishing": false,
-  "withdateranges": true,
-  "range": "ALL",
-  "hide_side_toolbar": false,
-  "allow_symbol_change": true,
-  "details": true,
-  "hotlist": true,
-  "calendar": true,
-  "container_id": "tradingview_945da"
-}
-  );
-  </script>
-</div>
-<!-- TradingView Widget END 
-                <a href="" class="item" style="background-color:#191919;">
-                    <div class="detail">
-                    </div>
-                </a>-->
-                <!-- * item -->
-            </div>
-        </div>
-        <!-- * Transactions -->
-        <div class="section mt-2 mb-2"  id="content-page">
-            <div class="card" style="background-color:#191919;">
+         <div class="card" style="background-color:#191919;">
                 <div class="card-body">
                     <form action="/dashboard" method="get" autocomplete="off" class="was-validated">
                         
@@ -352,149 +475,6 @@
                     
                 </div>
             </div>
-<div class="section mt-2">
-            <div class="section-title" style="color:#f2f2f2;">Trade Execution table</div>
-            <p style="color:#cecece;">All Trades are saved here for refrencing. You can also <code>print</code> Trade History</p>
-            <div class="card" style="background-color:#191919;">
-
-                <div class="table-responsive">
-                    <table id="datatable" class="table">
-                        <thead>
-                            <tr>
-                                <th style="color:#f2f2f2;">Trading Type</th>
-                                                    <th style="color:#f2f2f2;">Currency Pair</th>
-                                                    <th style="color:#f2f2f2;">Trading Action</th>
-                                                    <th style="color:#f2f2f2;">Entry Price</th>
-                                                    <th style="color:#f2f2f2;">Stop Loss</th>
-                                                    <th style="color:#f2f2f2;">Take Profit</th>
-                                                    <th style="color:#f2f2f2;">Status</th>
-                                                    <th style="color:#f2f2f2;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                                                    </tbody>
-                    </table>
-                    <button type="button" class="btn btn-text-primary" onclick="window.print()"><i class="las la-download"></i>Tap to Print</button>
-                </div>
-
-            </div>
-        </div>
-        <!-- Transactions -->
-        <div class="section mt-4">
-            <div class="transactions">
-                <!-- item -->
-                <a href="" class="item" style="background-color:#191919;">
-                        <!-- TradingView Widget BEGIN -->
-                    <div class="tradingview-widget-container">
-                      <div class="tradingview-widget-container__widget"></div>
-                      <!-- <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/currencies/forex-cross-rates/" rel="noopener" target="_blank"><span class="blue-text">Forex Rates</span></a> by TradingView</div> -->
-                      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
-                        {
-                          "width": "100%",
-                          "height": "400",
-                          "currencies": [
-                          "BTC",
-                          "EUR",
-                          "USD",
-                          "JPY",
-                          "GBP",
-                          "CHF",
-                          "AUD",
-                          "CAD",
-                          "NZD",
-                          "CNY",
-                          "TRY",
-                          "SEK",
-                          "NOK"
-                          ],
-                          "isTransparent": false,
-                          "colorTheme": "dark",
-                          "locale": "en"
-                        }
-                      </script>
-                    </div>
-                    <!-- TradingView Widget END -->
-                    <div class="detail">
-                    </div>
-                </a>
-                <!-- * item -->
-            </div>
-        </div>
-        <!-- * Transactions -->
-        <!-- Transactions -->
-        <div class="section mt-4">
-            <div class="transactions">
-                <!-- item -->
-                <a href="" class="item" style="background-color:#191919;">
-                       <div id="metals-tab" class="clearfix eael-tab-content-item inactive" data-title-link="metals-tab"><div class="tradingview-widget-container"><div id="tradingview_90e9a"></div><div class="tradingview-widget-copyright"></div> <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script> <script type="text/javascript">new TradingView.MediumWidget(
-  {
-  "symbols": [
-    [
-      "GOLD",
-      "XAUUSD|12m"
-    ],
-    [
-      "SILVER",
-      "XAGUSD|12m"
-    ],
-    [
-      "PLATINUM",
-      "XPTUSD|12m"
-    ],
-    [
-      "GOLD/EURO",
-      "XAUEUR|12m"
-    ],
-    [
-      "SILVER/EURO",
-      "XAGEUR|12m"
-    ],
-    [
-      "GOLD/AUD",
-      "XAUAUD|12m"
-    ],
-    [
-      "SILVER/AUD",
-      "XAGAUD|12m"
-    ],
-    [
-      "GOLD/GBP",
-      "XAUGBP|12m"
-    ],
-    [
-      "SILVER/GBP",
-      "XAGGBP|12m"
-    ],
-    [
-      "GOLD/JPY",
-      "XAUJPY|12m"
-    ],
-    [
-      "SILVER/JPY",
-      "XAGJPY|12m"
-    ]
-  ],
-  "chartOnly": false,
-  "width": "100%",
-  "height": "400",
-  "locale": "in",
-  "colorTheme": "dark",
-  "gridLineColor": "#2a2e39",
-  "trendLineColor": "rgba(230, 145, 56, 1)",
-  "fontColor": "#787b86",
-  "underLineColor": "rgba(55, 166, 239, 0.15)",
-  "isTransparent": true,
-  "autosize": true,
-  "container_id": "tradingview_90e9a"
-}
-  );</script> </div></div>
-                    <div class="detail">
-                    </div>
-                </a>
-                <!-- * item -->
-            </div>
-        </div>
-        <!-- * Transactions -->
         <!-- Transactions -->
         <div class="section mt-4">
             <div class="transactions">
@@ -1150,7 +1130,7 @@
         // Add to Home with 2 seconds delay.
         AddtoHome("2000", "once");
     </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     (function () {
         var options = {
             telegram: "marcius_1", // WhatsApp number
@@ -1162,8 +1142,19 @@
         s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
         var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
     })();
-</script>
-	
+</script> -->
+	<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = 'e0929df67ce93c0f84c1cf06bcf725c0195251fe';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+    <!-- <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript> -->
 <!-- Optional JavaScript -->
     <script src="../plugins/jquery-3.1.1.min.js"></script>
     <script src="../plugins/sweetalerts/sweetalert2.min.js"></script>

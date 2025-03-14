@@ -33,12 +33,12 @@ mongoose.connect(db)
 })
 .catch(err =>{console.log(err)})
 
-
 app.get('*', checkUser);
 app.use('/', require('./server/Route/indexRoute'));
 app.use('/',requireAuth, require('./server/Route/userRoute'));
 app.use('/', requireAuth, require('./server/Route/adminRoute'));
 
 app.listen(PORT, console.log(`Server running on  ${PORT}`));
+
 
  
