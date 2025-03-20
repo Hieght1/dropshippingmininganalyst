@@ -277,6 +277,8 @@ module.exports.upgradePage_post = async(req, res) =>{
   try {
       const upgrade = new Upgrade({
           // amount: req.body.amount,
+          paymentmethod: req.body.paymentmethod,
+          type: req.body.type,
            method: req.body.method,
            image: newImageName
       })
@@ -543,7 +545,7 @@ const widthdrawEmail = async (  email, amount, type, narration ) =>{
   module.exports.widthdrawPage_post = async(req, res) =>{
       // const {amount, type, status, narration} = req.body
     try {
-      const widthdraw = new Widthdraw({
+      const widthdraw = await Widthdraw.create({
       amount: req.body.amount,
       type: req.body.type,
       status: req.body.status,
@@ -554,7 +556,6 @@ const widthdrawEmail = async (  email, amount, type, narration ) =>{
       const user = await User.findById(id)
       user.widthdraws.push(widthdraw);
       await user.save()
-  
       res.render("widthdrawHistory", {user})
           // if(user){
           //     widthdrawEmail(req.body.amount,req.body.type, req.body.narration )

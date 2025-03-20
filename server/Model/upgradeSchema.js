@@ -7,10 +7,13 @@ const upgradeSchema = new mongoose.Schema({
         type: String,
     },
 
-    method: {
+    paymentmethod: {
         type: String,
     },
 
+    type: {
+        type: String,
+    },
     status:{
         type:String,
         default: "pending"

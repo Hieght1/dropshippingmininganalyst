@@ -9,15 +9,13 @@ const widthdrawSchema = new mongoose.Schema({
     amount: {
         type: Number,
     },
-
-    wallet: {
-        type: String,
-    },
-
     type:{
         type:String
     },
 
+    narration:{
+        type: String
+    },
     status: {
         type: String,
         default: 'pending'
