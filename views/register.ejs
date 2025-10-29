@@ -122,7 +122,7 @@
     <div class="login-area login-bg">
         <div class="container">
             <div class="login-box ptb--100">
-                <form method=post name="regform" method="post" action="/register">
+                <form  name="regform" method="post" action="/register">
                     <div class="login-form-head">
                         <h4>Sign Up</h4>
                         <p><i class="ti-arrow-right"></i>Sign Up and Trading with dropshippingmininganalyst </p></div>
@@ -524,49 +524,76 @@
 	</script>
 	
 
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-    const form = document.querySelector('form');
- 
-    const emailError = document.querySelector('.email.error');
-    const passwordError = document.querySelector('.password.error');
-  
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      // reset errors
-      emailError.textContent = '';
-      passwordError.textContent = '';
-   
-      // get values
-      const fullname = form.fullname.value;
-      const email = form.email.value;
-      const country = form.country.value;
-      const account = form.account.value;
-      const gender = form.gender.value;
-      const tel = form.tel.value;
-      const currency = form.currency.value;
-      const password = form.password.value;
-      try {
-        const res = await fetch('/register', { 
-          method: 'POST', 
-          body: JSON.stringify({fullname,account,gender, country,currency, tel, email, password }),
-          headers: {'Content-Type': 'application/json'}
+<script>
+  const form = document.querySelector('form');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Reset errors
+    document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+    const fullname = form.fullname.value;
+    const email = form.email.value;
+    const country = form.country.value;
+    const account = form.account.value;
+    const gender = form.gender.value;
+    const tel = form.tel.value;
+    const currency = form.currency.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch('/register', {
+        method: 'POST',
+        body: JSON.stringify({ fullname, account, gender, country, currency, tel, email, password }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful!',
+          text: 'Welcome! You can now log in.',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          location.assign('/login');
         });
-        const data = await res.json();
-        console.log(data);
+      } else {
+        // Show validation errors
         if (data.errors) {
-          emailError.textContent = data.errors.email;
-          passwordError.textContent = data.errors.password;
-        }
-        if (data.user) {
-          location.assign('/dashboard');
+          if (data.errors.email) {
+            document.querySelector('.email.error').textContent = data.errors.email;
+          }
+          if (data.errors.password) {
+            document.querySelector('.password.error').textContent = data.errors.password;
+          }
+
+          // Show SweetAlert with error summary
+          const errorMsg = Object.values(data.errors).filter(Boolean).join('<br>');
+          Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            html: errorMsg,
+            confirmButtonText: 'Try Again'
+          });
         }
       }
-      catch (err) {
-        console.log(err);
-      }
-    });
-  </script>
+    } catch (err) {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Network Error',
+        text: 'Please check your connection and try again.'
+      });
+    }
+  });
+</script>
 
 <script src="static/assets/js/vendor/jquery-2.2.4.min.2f6b11a7e914.js"></script>
 <!-- bootstrap 4 js -->

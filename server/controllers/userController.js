@@ -9,37 +9,40 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 
 
-// handle errors
+// Handle errors
 const handleErrors = (err) => {
-    console.log(err.message, err.code);
-    let errors = { email: '', password: '', };
-  
-    // duplicate email error
-    if (err.code === 11000) {
-      errors.email = 'that email is already registered';
-      return errors;
-    }
-  
-    // validation errors
-    if (err.message.includes('user validation failed')) {
-      // console.log(err);
-      Object.values(err.errors).forEach(({ properties }) => {
-        // console.log(val);
-        // console.log(properties);
-        errors[properties.path] = properties.message;
-      });
-    }
-  
+  let errors = { email: '', password: '' };
+
+  // Duplicate email
+  if (err.code === 11000) {
+    errors.email = 'That email is already registered';
     return errors;
   }
 
-  const maxAge = 3 * 24 * 60 * 60;
-  const createToken = (id) => {
-    return jwt.sign({ id }, 'piuscandothis', {
-      expiresIn: maxAge
+  // Validation errors
+  if (err.message.includes('user validation failed') || err.name === 'ValidationError') {
+    Object.values(err.errors).forEach(({ properties }) => {
+      if (properties.path === 'email' || properties.path === 'password') {
+        errors[properties.path] = properties.message;
+      }
     });
-  };
+  }
 
+  // Custom messages
+  if (err.message === 'incorrect email') {
+    errors.email = 'That email is not registered';
+  }
+  if (err.message === 'incorrect password') {
+    errors.password = 'That password is incorrect';
+  }
+
+  return errors;
+};
+
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, 'piuscandothis', { expiresIn: maxAge });
+};
 
 
 
@@ -68,128 +71,53 @@ module.exports.aboutPage = (req, res)=>{
         res.render('loginAdmin');
     }
     
-    const sendEmail = async ( fullname, email,  password ) =>{
-    
-        try {
-          const transporter =  nodemailer.createTransport({
-            host: 'mail.globalflextyipsts.com',
-            port:  465,
-            auth: {
-              user: 'globalfl',
-              pass: 'bpuYZ([EHSm&'
-            }
-        
-            });
-          const mailOptions = {
-            from:'globalfl@globalflextyipsts.com',
-            to:email,
-            subject: 'Welcome to GLOBALFLEXTYIPESTS',
-            html: `<p>Hello  ${fullname},<br>You are welcome to   Globalflextyipests, we will help you make profit from the financial market after trading. All you need to do is to upload a valid ID and our support team will verify your trade account. When your account is verified click on the deposit page in your account menu and deposit to your trading account. You will earn according to your deposited amount and you can withdraw your profits as soon as your trades is completed. Good luck and we are waiting to get testimonies from you.
       
-            Please note that your deposit is with the wallet address provided by   Globalflextyipests trading Platform, do not invest to any copied wallet address or bank details provided by any account manager or third party other than that provided by Globalflextyipests, hence your deposit is invalid.<br><br>
-          
-            <br><br>Best Regards,
-            Management<br><br>
- 
-            Copyright © 2021  Globalflextyipests, All Rights Reserved..<br><br>
-            Your login information:<br>Email: ${email}<br>Password: ${password}<br><br>You can login here: <br>  Contact us immediately if you did not authorize this registration.<br>Thank you.</p>`
-        }
-        transporter.sendMail(mailOptions, (error, info) =>{
-          if(error){
-              console.log(error);
-              res.send('error');
-          }else{
-              console.log('email sent: ' + info.response);
-              res.send('success')
-          }
-      })
-      
-      
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
-      
-      
+    module.exports.register_post = async (req, res) => {
+  const { fullname, gender, account, email, currency, country, tel, password } = req.body;
 
+  try {
+    const user = await User.create({
+      fullname, gender, account, email, currency, country, tel, password
+    });
 
-module.exports.register_post = async (req, res) =>{
-    const { fullname,gender,account, email,asset,currency, country,tel, password } = req.body;
-    try {
-        const user = await User.create({fullname,email,gender,account,asset,currency, country,tel, password });
-        const token = createToken(user._id);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(201).json({ user: user._id });
+    const token = createToken(user._id);
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
 
-        // if(user){
-        //   sendEmail(req.body.fullname,req.body.email, req.body.password)
-        // }else{
-        //   console.log(error);
-        // }
-      }
-        catch(err) {
-            const errors = handleErrors(err);
-            res.status(400).json({ errors });
-          }
-    
-}
-
-const loginEmail = async (  email ) =>{
-    
-    try {
-      const transporter =  nodemailer.createTransport({
-        host: 'mail.globalflextyipsts.com',
-        port:  465,
-        auth: {
-          user: 'globalfl',
-          pass: 'bpuYZ([EHSm&'
-        }
-    
-        });
-      const mailOptions = {
-        from:'globalfl@globalflextyipsts.com',
-        to:email,
-        subject: 'Your account has recently been logged In',
-        html: `<p>Greetings,${email}<br>your trading account has just been logged in by a device .<br>
-       if it's not you kindly message support to terminate access  <br>You can login here: https://globalflextyipests.com/login.<br>Thank you.</p>`
-    }
-    transporter.sendMail(mailOptions, (error, info) =>{
-      if(error){
-          console.log(error);
-          res.send('error');
-      }else{
-          console.log('email sent: ' + info.response);
-          res.send('success')
-      }
-  })
-  
-  
-    } catch (error) {
-      console.log(error.message);
-    }
+    res.status(201).json({ success: true, message: 'Registration successful!' });
+  } catch (err) {
+    const errors = handleErrors(err);
+    res.status(400).json({ success: false, errors });
   }
-  
+};
 
-  module.exports.login_post = async(req, res) =>{
-    const { email, password } = req.body;
 
-    try {
-      const user = await User.login(email, password);
-      const token = createToken(user._id);
-      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-      res.status(200).json({ user: user._id });
+module.exports.login_post = async (req, res) => {
+  const { email, password } = req.body;
 
-        // if(user){
-        //   loginEmail(req.body.email)
-        // }else{
-        //   console.log(error);
-        // }
-    } 
-    catch (err) {
-      const errors = handleErrors(err);
-      res.status(400).json({ errors });
+  try {
+    // 1. Login user (plain text password check)
+    const user = await User.login(email, password);
+
+    // 2. Check if account is approved
+    if (user.approve !== true && user.approve !== 'true') {
+      return res.status(403).json({
+        success: false,
+        errors: { email: 'Your account has not been approved. Try logging in later.' }
+      });
     }
-}
+
+    // 3. Create JWT & set cookie
+    const token = createToken(user._id);
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+
+    // 4. Return success
+    res.status(200).json({ success: true, redirect: '/dashboard' });
+
+  } catch (err) {
+    const errors = handleErrors(err);
+    res.status(400).json({ success: false, errors });
+  }
+};
 
 module.exports.dashboardPage = async(req, res) =>{
   res.render('dashboard');

@@ -105,7 +105,7 @@
 <div class="login-area login-bg">
     <div class="container">
         <div class="login-box ptb--100">
-            <form method=post name=mainform action="/login">             
+            <form method=post name="mainform" action="/login">             
                 <div class="login-form-head">
                     <h4>Login</h4>
                     <p><i class="ti-arrow-right"></i>Hello there, Login and Trade with the best</p>
@@ -216,42 +216,79 @@
         }); 				
 	</script>
 	
-    <script>
-        const form = document.querySelector('form');
-         const emailError = document.querySelector('.email.error');
-         const passwordError = document.querySelector('.password.error');
-         form.addEventListener('submit', async (e) => {
-           e.preventDefault();
-           // reset errors
-           emailError.textContent = '';
-           passwordError.textContent = '';
-           // get values
-           const email = form.email.value;
-           const password = form.password.value;
-           try {
-             const res = await fetch('/login', { 
-               method: 'POST', 
-               body: JSON.stringify({ email, password }),
-               headers: {'Content-Type': 'application/json'}
-             });
-             const data = await res.json();
-             // console.log(data);
-             if (data.errors) {
-               emailError.textContent = data.errors.email;
-               passwordError.textContent = data.errors.password;
-             }
-             if (data.user) {
-               location.assign('/dashboard');
-             }
-           }
-           catch (err) {
-             console.log(err);
-           }
-         });
-       
-       
-         
-       </script>
+  <!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    const emailError   = document.querySelector('.email.error');
+    const passwordError = document.querySelector('.password.error');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // reset
+      emailError.textContent   = '';
+      passwordError.textContent = '';
+
+      const email    = form.email.value.trim();
+      const password = form.password.value;
+
+      // disable button while request is in flight
+      const btn = form.querySelector('#form_submit');
+      btn.disabled = true;
+      btn.innerHTML = 'Logging in…';
+
+      try {
+        const res  = await fetch('/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // ---- SUCCESS ----
+          Swal.fire({
+            icon: 'success',
+            title: 'Welcome back!',
+            text: data.message,
+            timer: 1800,
+            showConfirmButton: false
+          }).then(() => {
+            location.assign('/dashboard');
+          });
+        } else {
+          // ---- ERRORS ----
+          if (data.errors) {
+            if (data.errors.email)   emailError.textContent   = data.errors.email;
+            if (data.errors.password) passwordError.textContent = data.errors.password;
+          }
+
+          const msg = Object.values(data.errors).filter(Boolean).join('<br>');
+          Swal.fire({
+            icon: 'error',
+            title: 'Login failed',
+            html: msg,
+            confirmButtonText: 'OK'
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Network error',
+          text: 'Please try again.'
+        });
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Submit';
+      }
+    });
+  });
+</script>
+   
 
 <script src="static/assets/js/vendor/jquery-2.2.4.min.2f6b11a7e914.js"></script>
 <!-- bootstrap 4 js -->
