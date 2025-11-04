@@ -119,9 +119,10 @@ module.exports.login_post = async (req, res) => {
   }
 };
 
-module.exports.dashboardPage = async(req, res) =>{
+module.exports.dashboardPage = async (req, res) => {
+  // const user = req.user;     
   res.render('dashboard');
-}
+};
 
 module.exports.linkPage = async(req, res) =>{
   res.render('link_socialmedia_account');

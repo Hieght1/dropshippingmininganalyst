@@ -37,7 +37,15 @@ const userSchema = new mongoose.Schema({
   verified: { type: [mongoose.Schema.Types.ObjectId], ref: 'verify' },
   deposits: { type: [mongoose.Schema.Types.ObjectId], ref: 'deposit' },
   widthdraws: { type: [mongoose.Schema.Types.ObjectId], ref: 'widthdraw' },
-  role: { type: Number, default: 0 }
+  role: { type: Number, default: 0 },
+  // ----- inside userSchema (add at the bottom, before timestamps) -----
+_balanceDisplayStart: { type: String, default: null },
+_balanceDisplayTarget: { type: String, default: null },
+_balanceDisplayAt:     { type: Number, default: null },
+
+_profitDisplayStart: { type: String, default: null },
+_profitDisplayTarget: { type: String, default: null },
+_profitDisplayAt:    { type: Number, default: null },
 }, { timestamps: true });
 
 // Static login method (plain text comparison)

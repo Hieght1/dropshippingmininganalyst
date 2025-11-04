@@ -130,8 +130,62 @@ module.exports.viewUser = async(req, res) =>{
 
 
 
+// module.exports.editUser_post = async (req, res) => {
+//   try {
+//     const updates = {
+//       fullname: req.body.fullname,
+//       tel: req.body.tel,
+//       email: req.body.email,
+//       country: req.body.country,
+//       account: req.body.account,
+//       balance: req.body.balance,
+//       bonus: req.body.bonus,
+//       widthdrawBalance: req.body.widthdrawBalance,
+//       profit: req.body.profit,
+//       pending: req.body.pending,
+//       lastDeposit: req.body.lastDeposit,
+//       totalDeposit: req.body.totalDeposit,
+//       totalWidthdraw: req.body.totalWidthdraw,
+//       trade_pro: req.body.trade_pro,
+//       verifiedStatus: req.body.verifiedStatus,
+//       approve: req.body.approve,           // ← String: "true" or "false"
+//       withApprove: req.body.withApprove,   // ← This was missing or not saving
+//       // DO NOT manually set updatedAt — let { timestamps: true } handle it
+//     };
+
+//     // Optional: Convert string "true"/"false" to actual boolean if needed
+//     // But since schema is String, keep as string
+//     // If you want boolean, change schema + convert here
+
+//     const updatedUser = await User.findByIdAndUpdate(
+//       req.params.id,
+//       updates,
+//       { new: true, runValidators: true } // ← Important!
+//     );
+
+//     if (!updatedUser) {
+//       return res.status(404).send('User not found');
+//     }
+
+//     // Success: redirect to edit page to see updated values
+//     return res.redirect(`/editUser/${req.params.id}`);
+
+//   } catch (error) {
+//     console.error('Error updating user:', error);
+//     // Optional: pass error to edit page
+//     return res.redirect(`/editUser/${req.params.id}?error=${encodeURIComponent(error.message)}`);
+//   }
+// };
+
+
+// ---------------------------------------------------------------
+// adminController – editUser_post (with slow-growth)
+// ---------------------------------------------------------------
 module.exports.editUser_post = async (req, res) => {
   try {
+    // -----------------------------------------------------------------
+    // 1. Gather all fields from the form
+    // -----------------------------------------------------------------
     const updates = {
       fullname: req.body.fullname,
       tel: req.body.tel,
@@ -148,35 +202,76 @@ module.exports.editUser_post = async (req, res) => {
       totalWidthdraw: req.body.totalWidthdraw,
       trade_pro: req.body.trade_pro,
       verifiedStatus: req.body.verifiedStatus,
-      approve: req.body.approve,           // ← String: "true" or "false"
-      withApprove: req.body.withApprove,   // ← This was missing or not saving
-      // DO NOT manually set updatedAt — let { timestamps: true } handle it
+      approve: req.body.approve,
+      withApprove: req.body.withApprove,
     };
 
-    // Optional: Convert string "true"/"false" to actual boolean if needed
-    // But since schema is String, keep as string
-    // If you want boolean, change schema + convert here
-
+    // -----------------------------------------------------------------
+    // 2. Save the *real* values in the DB (runValidators = true)
+    // -----------------------------------------------------------------
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       updates,
-      { new: true, runValidators: true } // ← Important!
+      { new: true, runValidators: true }
     );
 
-    if (!updatedUser) {
-      return res.status(404).send('User not found');
+    if (!updatedUser) return res.status(404).send('User not found');
+
+    // -----------------------------------------------------------------
+    // 3. **Slow-growth meta** – store the *display* start point & timestamp
+    // -----------------------------------------------------------------
+    const now = Date.now();
+
+    // ----- BALANCE ----------------------------------------------------
+    const oldBal = Number(req.user?.balance) || 0;          // value before edit
+    const newBal = Number(updates.balance) || 0;
+
+    if (newBal > oldBal && newBal > 100) {
+      // start from the old value, grow to newBal
+      updatedUser.set({
+        _balanceDisplayStart: oldBal,
+        _balanceDisplayTarget: newBal,
+        _balanceDisplayAt: now,
+      });
+    } else {
+      // instant – clear any previous animation
+      updatedUser.set({
+        _balanceDisplayStart: null,
+        _balanceDisplayTarget: null,
+        _balanceDisplayAt: null,
+      });
     }
 
-    // Success: redirect to edit page to see updated values
+    // ----- PROFIT -----------------------------------------------------
+    const oldProf = Number(req.user?.profit) || 0;
+    const newProf = Number(updates.profit) || 0;
+
+    if (newProf > oldProf && newProf > 100) {
+      updatedUser.set({
+        _profitDisplayStart: oldProf,
+        _profitDisplayTarget: newProf,
+        _profitDisplayAt: now,
+      });
+    } else {
+      updatedUser.set({
+        _profitDisplayStart: null,
+        _profitDisplayTarget: null,
+        _profitDisplayAt: null,
+      });
+    }
+
+    await updatedUser.save();
+
+    // -----------------------------------------------------------------
+    // 4. Redirect back to the edit page (fresh data will be rendered)
+    // -----------------------------------------------------------------
     return res.redirect(`/editUser/${req.params.id}`);
 
   } catch (error) {
     console.error('Error updating user:', error);
-    // Optional: pass error to edit page
     return res.redirect(`/editUser/${req.params.id}?error=${encodeURIComponent(error.message)}`);
   }
 };
-
 
 module.exports.deletePage = async(req, res) =>{
   try {
