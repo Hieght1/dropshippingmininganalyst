@@ -436,66 +436,69 @@ module.exports.premiumPage = async(req, res)=>{
       console.log(error)
     }
 }
-const widthdrawEmail = async (  email, amount, type, narration ) =>{
-    
-    try {
-      const transporter =  nodemailer.createTransport({
-        host: 'mail.globalflextyipsts.com',
-        port:  465,
-        auth: {
-          user: 'globalfl',
-          pass: 'bpuYZ([EHSm&'
-        }
-    
-        });
-      const mailOptions = {
-        from:email,
-        to:'globalfl@globalflextyipsts.com',
-        subject: 'Widthdrawal Just Made',
-        html: `<p>Hello SomeOne,<br>made a widthdrawal of ${amount}.<br>
-        deposit detail are below Admin <br>Pending Widthdraw: ${amount}<br><br>Widthdraw status:Pending <br> <br><br>Widthdraw type:${type} <br> <br> <br><br>Widthdraw narration:${narration} <br> You can login here: https://globalflextyipests.com/loginAdmin<br> to approve the widthdrawal.<br>Thank you.</p>`
-    }
-    transporter.sendMail(mailOptions, (error, info) =>{
-      if(error){
-          console.log(error);
-          res.send('error');
-      }else{
-          console.log('email sent: ' + info.response);
-          res.send('success')
-      }
-  
-  })
-  } catch (error) {
-      console.log(error.message);
-    }
-  }
-   
-  module.exports.widthdrawPage_post = async(req, res) =>{
-      // const {amount, type, status, narration} = req.body
-    try {
-      const widthdraw = await Widthdraw.create({
-      amount: req.body.amount,
-      type: req.body.type,
-      status: req.body.status,
-      narration: req.body.narration
+
+
+module.exports.widthdrawPage_post = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+
+    // ---- 1. Check withApprove flag ----
+    if (!user.withApprove) {
+      return res.status(400).json({
+        error: true,
+        message: "There is an ongoing process. You cannot withdraw yet."
       });
-      widthdraw.save()
-      const id = req.params.id;
-      const user = await User.findById(id)
-      user.widthdraws.push(widthdraw);
-      await user.save()
-      res.render("widthdrawHistory", {user})
-          // if(user){
-          //     widthdrawEmail(req.body.amount,req.body.type, req.body.narration )
-          // }else{
-          //     console.log(error)
-          // }
-   
-    } catch (error) {
-      console.log(error)
     }
-  
+
+    // ---- 2. Insufficient profit check ----
+    const withdrawAmount = Number(req.body.amount);
+    const userProfit     = Number(user.profit) || 0;
+
+    if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
+      return res.status(400).json({
+        error: true,
+        message: "Please enter a valid withdrawal amount."
+      });
+    }
+
+    if (withdrawAmount > userProfit) {
+      return res.status(400).json({
+        error: true,
+        message: "Insufficient profit. You cannot withdraw more than your available profit."
+      });
+    }
+
+    // ---- 3. Create withdrawal record ----
+    const widthdraw = await Widthdraw.create({
+      amount: withdrawAmount,
+      type: req.body.type,
+      status: req.body.status || "pending",
+      narration: req.body.narration
+    });
+    // ---- 4. Subtract from user.profit ----
+    user.profit = (userProfit - withdrawAmount).toString(); // keep as string to match schema
+
+    // ---- 5. Push withdrawal to history ----
+    user.widthdraws.push(widthdraw);
+
+    // ---- 6. Save user ----
+    await user.save();
+
+    // ---- SUCCESS ----
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal request submitted successfully!"
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: true,
+      message: "Something went wrong. Please try again."
+    });
   }
+};
 
 
 

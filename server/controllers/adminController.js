@@ -127,86 +127,55 @@ module.exports.viewUser = async(req, res) =>{
           console.log(error);
         }
   }
-const sendEmail = async ( fullname,email, available,  balance, bonus, widthdrawBalance,profit,totalDeposit,totalWidthdraw,verifiedStatus,account, session ) =>{
-    
+
+
+
+module.exports.editUser_post = async (req, res) => {
   try {
-    const transporter =  nodemailer.createTransport({
-      host: 'mail.globalflextyipsts.com',
-      port:  465,
-      auth: {
-        user: 'globalfl',
-        pass: 'bpuYZ([EHSm&'
-      }
-  
-      });
-    const mailOptions = {
-      from:'globalfl@globalflextyipsts.com',
-      to:email,
-      subject: 'Dashboard Update',
-      html: `<p>Greetings ${fullname},<br>Here are your availabe balances and your trading account status.<br>
-      login to see your dashboard:<br>Email:${email}<br>Available balance: ${available}<br>Deposit Balance: ${balance}<br>Bonus:${bonus}<br>Widthdrawal Balance: ${widthdrawBalance}<br>Account Profit:${profit}<br>Total Deposit:${totalDeposit}<br>Total Widthdraw: ${totalWidthdraw}<br> Verification status: ${verifiedStatus}<br>Account Level: ${account}<br>trading sessions: ${session}<br><br>You can login here: https://globalflextyipests.com/loginAdmin<br>.<br>Thank you.</p>`
-  }
-  transporter.sendMail(mailOptions, (error, info) =>{
-    if(error){
-        console.log(error);
-        res.send('error');
-    }else{
-        console.log('email sent: ' + info.response);
-        res.send('success')
+    const updates = {
+      fullname: req.body.fullname,
+      tel: req.body.tel,
+      email: req.body.email,
+      country: req.body.country,
+      account: req.body.account,
+      balance: req.body.balance,
+      bonus: req.body.bonus,
+      widthdrawBalance: req.body.widthdrawBalance,
+      profit: req.body.profit,
+      pending: req.body.pending,
+      lastDeposit: req.body.lastDeposit,
+      totalDeposit: req.body.totalDeposit,
+      totalWidthdraw: req.body.totalWidthdraw,
+      trade_pro: req.body.trade_pro,
+      verifiedStatus: req.body.verifiedStatus,
+      approve: req.body.approve,           // ← String: "true" or "false"
+      withApprove: req.body.withApprove,   // ← This was missing or not saving
+      // DO NOT manually set updatedAt — let { timestamps: true } handle it
+    };
+
+    // Optional: Convert string "true"/"false" to actual boolean if needed
+    // But since schema is String, keep as string
+    // If you want boolean, change schema + convert here
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updates,
+      { new: true, runValidators: true } // ← Important!
+    );
+
+    if (!updatedUser) {
+      return res.status(404).send('User not found');
     }
-})
-}catch (error) {
-  console.log(error.message);
-}
 
-}
+    // Success: redirect to edit page to see updated values
+    return res.redirect(`/editUser/${req.params.id}`);
 
-
-
-module.exports.editUser_post = async(req, res) =>{
-    try {
-        await User.findByIdAndUpdate(req.params.id,{
-          fullname: req.body.fullname,
-          tel: req.body.tel,
-          email: req.body.email,
-          country: req.body.country,
-          account: req.body.account,
-          balance: req.body.balance,
-          bonus: req.body.bonus,
-          widthdrawBalance: req.body.widthdrawBalance,
-          profit: req.body.profit,
-          pending: req.body.pending,
-          lastDeposit: req.body.lastDeposit,
-          totalDeposit: req.body.totalDeposit,
-          totalWidthdraw: req.body.totalWidthdraw,
-          trade_pro: req.body.trade_pro,
-          verifiedStatus:req.body.verifiedStatus,
-          
-          updatedAt: Date.now()
-        });
-
-      
-          //  if(User){
-          // sendEmail(req.body.fullname,req.body.email, req.body.available, req.body.balance, req.body.bonus,req.body.widthdrawBalance, req.body.profit, req.body.totalDeposit,req.body.totalWidthdraw,req.body.signal, req.body.verifiedStatus,req.body.account, req.body.session )
-          // }else{
-          //   console.log(error);
-          // }
-          await res.redirect(`/editUser/${req.params.id}`);
-          
-          console.log('redirected');
-        
-      // } catch (error) {
-      //   console.log(error);
-      // }
-
-        await res.redirect(`/editUser/${req.params.id}`);
-        
-        console.log('redirected');
-      } catch (error) {
-        console.log(error);
-      }
-    
-}
+  } catch (error) {
+    console.error('Error updating user:', error);
+    // Optional: pass error to edit page
+    return res.redirect(`/editUser/${req.params.id}?error=${encodeURIComponent(error.message)}`);
+  }
+};
 
 
 module.exports.deletePage = async(req, res) =>{

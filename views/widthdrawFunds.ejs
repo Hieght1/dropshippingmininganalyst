@@ -20,18 +20,18 @@
     <script src="plugins/sweetalerts/promise-polyfill.js"></script>
     <link href="plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
     <script>
-        function noticePop( value, type ){
-            swal({
-                html: '<span style="font-size:18px!important;">'+ `${value}` +'</span>',
-                type: `${type}`,
-                timer: 4000,
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-            }).then(function(){
-                window.location.href = 'withdraw';
-            });
-        }
+       function noticePop(value, type) {
+  swal({
+    html: '<span style="font-size:18px!important;">' + `${value}` + '</span>',
+    type: `${type}`,
+    timer: 4000,
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+  }).then(function () {
+    window.location.href = '/withdrawal'; // or keep current page
+  });
+}
 
         function noticeUpgrade( value ){
             swal({
@@ -721,6 +721,37 @@
         });
     </script>
    
+
+   <script>
+  // Intercept form submit
+  document.getElementById('withdrawal-form').addEventListener('submit', async function (e) {
+    e.preventDefault(); // stop normal submit
+
+    const formData = new FormData(this);
+
+    try {
+      const response = await fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // SUCCESS
+        noticePop(result.message, 'success');
+      } else {
+        // ERROR (including withApprove block)
+        noticePop(result.message, 'error');
+      }
+    } catch (err) {
+      noticePop('Network error. Please try again.', 'error');
+    }
+  });
+</script>
 
 </body>
 
