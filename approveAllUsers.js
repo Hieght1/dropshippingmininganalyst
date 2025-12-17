@@ -36,3 +36,5 @@ const db = 'mongodb+srv://marcelpolocha1:081358pius@cluster0.f9a85hv.mongodb.net
     process.exit(1);
   }
 })();
+
+// dropshippingmininganalyst broker database name for godbless
