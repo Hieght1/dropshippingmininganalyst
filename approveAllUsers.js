@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const User = require('./server/Model/User'); // Change path to match your structure
 
 // === 2. Your MongoDB connection string ===
-const db = 'mongodb+srv://marcelpolocha1:081358pius@cluster0.f9a85hv.mongodb.net/dropshippingmininganalyst';
+const db = 'mongodb+srv://marcelpolocha1:081358pius@cluster0.f9a85hv.mongodb.net/sidehustlebroker';
 
 // === 3. Connect & Run Update ===
 (async () => {
